@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+     <ui:composition template="/template.xhtml">
+        <ui:define name="corpo">
+        <h:form id="formtable">
+        <h2>Agendamentos</h2>
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        <h:panelGrid columns="2" style="margin-bottom:20px;" >
+            <b:commandButton  value="Cadastrar" icon="ui-icon-plusthick" action="#{agendamentoController.iniciarCadastro}" style="margin-right:2px; width:150px;"/>
+            <b:button value="Listar" icon="ui-icon-calculator" disabled="true" style="width:150px;"/>
+               
+        </h:panelGrid>    
+         
+                  <p:dataTable id="tabela" var="item" value="#{agendamentoController.listagem}" style="margin-bottom:20px;">
+                      
+                      <p:column headerText="N°" width="60">
+                          <h:outputText value="#{item.numero}"/>
+                      </p:column> 
+                       <p:column headerText="Paciente" >
+                          <h:outputText value="#{item.pessoa.nome}"/>
+                      </p:column>
+                      
+                       <p:column headerText="Data" width="100">
+                          <h:outputText value="#{item.dataAgendamentoString}" />
+                      </p:column> 
+                      
+                       <p:column headerText="Expediente" >
+                          <h:outputText value="#{item.expediente}"/>
+                      </p:column> 
+                       <p:column headerText="Observação" >
+                          <h:outputText value="#{item.observacao}"/>
+                      </p:column> 
+                      
+                          
+                      
+                               
+                                           
+                      <p:column  style="width:50px;">
+                          <p:commandButton  action="#{agendamentoController.editar}" icon="ui-icon-pencil">
+                                <f:setPropertyActionListener target="#{agendamentoController.agendamento}" value="#{item}"  />             
+                          </p:commandButton>
+
+                          <p:commandButton  action="#{agendamentoController.remover}" icon="ui-icon-close" update="tabela" >
+                                                          <f:setPropertyActionListener target="#{agendamentoController.agendamento}" value="#{item}"  />             
+                          </p:commandButton>
+
+                        </p:column>
+                  </p:dataTable>
+  
+        
+        </h:form>
+      </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+     <ui:composition template="/template.xhtml">
+        <ui:define name="corpo">
+            <h:form id="form">
+             
+             <h2>Custos Operacionais</h2>
+            
+               <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />     
+               
+                        <h:outputLabel value="Descricão*"/>
+                        <b:inputText value="#{tratamentoController.tratamento.descricao}"/> 
+                  		
+                  		<h:outputLabel value="Nota Fiscal:"/>
+                  	    <p:fileUpload  id="fileAnexo" value="#{pacienteController.file}" mode="simple" sizeLimit="1000000" style="margin-left:10px; margin-top:-10px;"
+                         allowTypes="/(\.|\/)(doc|docx|xls|xlsx|pdf|jpg)$/"  invalidFileMessage="Formato de arquivo invalido"/>
+                    
+                    <b:commandButton action="#{tratamentoController.salvar}" value="Registrar" style="margin-bottom:20px; width:200px;" />
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

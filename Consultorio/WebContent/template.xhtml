@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+ 
+  	<h:head>
+          <title>Consultorio</title>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />  
+
+<script type="text/javascript">
+PrimeFaces.locales['pt_BR'] = {
+	    closeText : 'Fechar',
+	    prevText : 'Anterior',
+	    nextText : 'Próximo',
+	    currentText : 'Começo',
+	    monthNames : [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho','Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro' ],
+	    monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago','Set', 'Out', 'Nov', 'Des' ],
+	    dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta','Sábado' ],
+	    dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
+	    dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+	    weekHeader : 'Semana',
+	    firstDay : 1,
+	    isRTL : false,
+	    showMonthAfterYear : false,
+	    yearSuffix : '',
+	    timeOnlyTitle : 'Horário',
+	    timeText : 'Tempo',
+	    hourText : 'Hora',
+	    minuteText : 'Minuto',
+	    secondText : 'Segundo',
+	    ampm : false,
+	    month : 'Mês',
+	    week : 'Semana',
+	    day : 'Dia',
+	    allDayText : 'Todo Dia'
+	};
+
+</script>
+          
+    </h:head>
+   
+    <h:body>
+<b:navBar brand="Consultorio" brandHref="#" inverse="true" >
+    <b:navbarLinks>
+         <b:navLink value="Inicio" outcome="/index.xhtml" iconAwesome="ui-icon-home" />
+            <b:navLink value="Realizar Consulta" outcome="/consulta/passo1.xhtml"  />
+            
+             <b:dropMenu value="Agendamento">
+             	<b:navLink value="Agendar Consulta" outcome="/agendamento/form.xhtml"/>
+                <b:navLink value="Reagendar Consulta" outcome="/agendamento/form.xhtml"/>
+                <b:navLink value="Consultar" outcome="/agendamento/list.xhtml"/>
+             </b:dropMenu>
+            <b:navLink value="Odontograma" outcome="/paciente/odontograma.xhtml"  />
+            <b:dropMenu value="Cadastros">
+	            <b:navLink value="Tratamento" outcome="/tratamento/form.xhtml"/>
+	            <b:navLink value="Categoria Tratamento" outcome="/categoriaTratamento/form.xhtml"/>
+	           	<b:navLink value="Dentes" outcome="/dente/form.xhtml"/>
+	            <b:navLink value="Expedientes" outcome="/expediente/form.xhtml"/>
+	            <b:navLink value="Pacientes" outcome="/paciente/form.xhtml" />
+        	</b:dropMenu>
+        	<b:dropMenu value="Relatórios e Finanças">
+        	    <b:navLink value="Consultas Realizadas" outcome="/financeiro/entrada_financeiro.xhtml"/>
+	            <b:navLink value="Clientes com Pendência" outcome="/financeiro/pendencias_financeiro.xhtml"/>
+	           	<b:navLink value="Custos Operacionais" outcome="/financeiro/saida_financeiro.xhtml"/>
+        	</b:dropMenu>
+    </b:navbarLinks>
+</b:navBar>
+	<b:container>
+	
+		<ui:insert name="corpo">Corpo original do template</ui:insert>
+		<b:well>
+		<center> Copyright© 2015. Desenvolvido por Herivelton Paiva</center>
+<!--                     Faça logout <a href="j_spring_security_logout">Clicando -->
+<!-- 				aqui</a>. -->
+		</b:well>
+	</b:container>
+
+</h:body>
+</html>

@@ -1,0 +1,81 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+     <ui:composition template="/template.xhtml">
+        <ui:define name="corpo">
+            <h2>Iniciar Consulta Odontológica</h2>
+            
+            	<h:form id="formAutoComplete">
+
+         		<h:outputLabel value="Nome do Paciente:" />
+         
+                 <p:autoComplete id="autoCompletePaciente"  value="#{pacienteController.paciente}" completeMethod="#{pacienteController.completePaciente}" 
+                  var="pessoa" itemLabel="#{pessoa.nome}" itemValue="#{pessoa}" converter="pacienteConverter" > 
+                  <p:ajax event="itemSelect" listener="#{consultaController.carregaPaciente}" update="formAutoComplete, tabela"  />                   
+                  </p:autoComplete>
+                  
+                  <p:fieldset legend="Informações do paciente"  toggleable="true" toggleSpeed="700" style="font-size:12px; margin-top:20px">
+                      
+                      <h:panelGroup rendered="#{ not empty consultaController.consulta.pessoa.nome}">
+                  
+					<p:outputLabel value="Nome" />
+					<b:inputText value="#{consultaController.consulta.pessoa.nome}" disabled="true" />
+
+					<p:outputLabel value="CPF" />
+					<b:inputText value="#{consultaController.consulta.pessoa.cpf}" disabled="true"/>
+					
+					<p:outputLabel value="RG" />
+					<b:inputText value="#{consultaController.consulta.pessoa.rg}" disabled="true"/>
+
+					<p:outputLabel value="Data de Nascimento:" disabled="true"/>
+        			<b:inputText value="#{consultaController.consulta.pessoa.dataNascimento}" disabled="true"/>
+
+                        <p:outputLabel value="Endereco*"/>
+                        <b:inputText value="#{consultaController.consulta.pessoa.endereco.rua}" size="52" disabled="true"/>
+
+                        <p:outputLabel value="Numero"/>
+                        <b:inputText value="#{consultaController.consulta.pessoa.endereco.numero}" size="5" maxlength="5" disabled="true"/>
+                     
+                        <p:outputLabel value="Cidade*"/>
+                        <b:inputText value="#{consultaController.consulta.pessoa.endereco.cidade}" size="30" disabled="true"/>
+                        <p:outputLabel value="Celular"/>
+                        <b:inputText value="#{consultaController.consulta.pessoa.contato.celular}" size="20" maxlength="9" disabled="true"/>
+                
+                  </h:panelGroup>
+                      
+               </p:fieldset>
+         
+               <p:dataTable id="tabela" var="item" value="#{historicoConsultaController.listHistoricoConsultas}" style="margin-top:20px; margin-bottom:20px;">  
+                   <f:facet name="header">
+						Histórico de Consulta do Paciente
+					</f:facet>             
+                       <p:column headerText="N°">
+                          <h:outputText value="#{item.numero}"/>
+                      </p:column>   
+                      <p:column headerText="Data">
+                          <h:outputText value="#{item.consultaGeral.dataConsulta}"/>
+                      </p:column>  
+                      <p:column headerText="Procedimentos">
+                          <h:outputText value="#{item.tratamento.descricao}"/>
+                      </p:column>  
+                      <p:column headerText="Observação ">
+                          <h:outputText value="#{item.observacao}"/>
+                      </p:column>  
+                      <p:column headerText="Dente">
+                          <h:outputText value="#{item.denteArcadaDentaria}"/>
+                      </p:column>          
+                  </p:dataTable>
+  			
+                    <b:commandButton action="#{consultaController.iniciarPasso2}" value="Avançar >>" style="margin-bottom:20px; margin-top:20px; width:200px;"/>
+
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />    
+                 
+            </h:form>
+            
+        </ui:define>
+    </ui:composition>
+</html>

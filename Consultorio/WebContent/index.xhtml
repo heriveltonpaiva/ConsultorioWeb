@@ -1,0 +1,117 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+     <ui:composition template="/template.xhtml">
+        <ui:define name="corpo">
+            <h3>Página Inicial Atendimento</h3>
+			<h:form id="formHist">
+                  <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />     
+                 
+                 <h:panelGrid columns="3"> 
+                 <h:outputLabel value="Paciente:" />
+                 <p:autoComplete id="autoCompletePaciente" size="50"  value="#{pacienteController.paciente}" completeMethod="#{pacienteController.completePaciente}" 
+                  var="pessoa" itemLabel="#{pessoa.nome}" itemValue="#{pessoa}" converter="pacienteConverter"> 
+                  <p:ajax event="itemSelect" listener="#{pacienteController.carregarPacienteNaFilaEspera}" update="formHist"/>                   
+                  </p:autoComplete>
+                  <h:outputLabel value="" />
+                  <h:outputLabel value="Observação:" style="margin-right:5px;"/>
+                  <p:inputTextarea value="#{pacienteController.paciente.observacao}" rows="3" cols="52"/>
+                  
+                  <b:commandButton action="#{pacienteController.adicionarPacienteNaFilaEspera}" value="Adicionar a fila" style="width:140px;margin-left:10px; margin-top:-5px;" />
+                  
+                  </h:panelGrid>
+                   <p:dataTable id="tabelaFilaeEspera" var="paciente" value="#{pacienteController.listaEsperaPacientes}" style="margin-top:20px; margin-bottom:20px;" emptyMessage="Nenhum paciente na fila de atendimento." rendered="#{not empty pacienteController.listaEsperaPacientes}">  
+                   <f:facet name="header">
+						Lista de Espera para Atendimento 
+					</f:facet>
+                	<p:column headerText="N°" width="50">
+                          <h:outputText value="x"/>
+                      </p:column> 
+                     <p:column headerText="Paciente" >
+                          <h:outputText value="#{paciente.nome}"/>
+                     </p:column> 
+                     <p:column headerText="Observação" >
+                          <h:outputText value="#{paciente.observacao}"/>
+                     </p:column> 
+                      <p:column headerText="Avulso" width="90" >
+                          <h:outputText value="#{paciente.ativo}"/>
+                     </p:column>  
+                	</p:dataTable>
+           </h:form>
+           
+           <h:form id="formList2">
+                	
+ 			      <p:dataTable id="tabelaAgendamentos" var="item" value="#{agendamentoController.listagem}" style="margin-top:20px" >  
+                  <f:facet name="header">
+        			Agendamentos para hoje
+    			  </f:facet>             
+                      <p:column headerText="N°" width="50">
+                          <h:outputText value="#{item.numero}"/>
+                      </p:column> 
+                      
+                       <p:column headerText="Data" width="100">
+                          <h:outputText value="#{item.dataAgendamento}">
+                                 <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3"/>                                
+                          </h:outputText>
+                      </p:column> 
+                      
+                       <p:column headerText="Observação" >
+                          <h:outputText value="#{item.observacao}"/>
+                      </p:column> 
+                      
+                       <p:column headerText="Paciente" >
+                          <h:outputText value="#{item.pessoa.nome}"/>
+                      </p:column>    
+                      
+                       <p:column headerText="Expediente">
+                          <h:outputText value="#{item.expediente}"/>
+                      </p:column>
+                       
+                        <p:column width="160">
+                    	<b:commandButton action="#{consultaController.iniciarPasso2}" value="Atender Paciente" style="margin-bottom:2px; width:140px;">
+                    	     <f:setPropertyActionListener value="#{item.pessoa}" target="#{consultaController.pacienteDaConsulta}" />
+                    	     <f:setPropertyActionListener value="#{item}" target="#{consultaController.agendamentoDaConsulta}" />
+                    	
+                    	</b:commandButton>
+                    	<b:commandButton action="#{historicoConsultaController.exibirHistoricoPaciente}" value="Mostrar Histórico" style="width:140px;">
+                    	     <f:setPropertyActionListener value="#{item.pessoa}" target="#{historicoConsultaController.paciente}" />
+                    	</b:commandButton>
+                        </p:column>
+                  </p:dataTable>
+  			</h:form>
+  			
+  		
+         
+          
+          <h:form>
+         
+                  <p:dataTable id="tabela" var="item" value="#{historicoConsultaController.listHistoricoConsultas}" style="margin-top:20px; margin-bottom:20px;" emptyMessage="Nenhum paciente selecionado." rendered="#{not empty historicoConsultaController.listHistoricoConsultas}">  
+                   <f:facet name="header">
+						Histórico de Consulta do Paciente
+					</f:facet>             
+                       <p:column headerText="N°">
+                          <h:outputText value="#{item.numero}"/>
+                      </p:column>   
+                      <p:column headerText="Data">
+                          <h:outputText value="#{item.consultaGeral.dataConsulta}"/>
+                      </p:column>  
+                      <p:column headerText="Procedimentos">
+                          <h:outputText value="#{item.tratamento.descricao}"/>
+                      </p:column>  
+                      <p:column headerText="Observação ">
+                          <h:outputText value="#{item.observacao}"/>
+                      </p:column>  
+                      <p:column headerText="Dente">
+                          <h:outputText value="#{item.denteArcadaDentaria}"/>
+                      </p:column>          
+                     
+                  </p:dataTable>
+  			
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html>

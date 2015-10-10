@@ -1,0 +1,113 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+     <ui:composition template="/template.xhtml">
+        <ui:define name="corpo">
+        <f:view>
+            <h:form id="form" >
+                <h2>Procedimentos/Operações</h2>
+
+                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />     
+
+					    <h:outputLabel value="Número"/>
+                        <b:inputText value="#{consultaController.consulta.numero}" /> 
+                     
+                        <h:outputLabel value="Paciente:"/>
+                        <b:inputText value="#{consultaController.consulta.pessoa.nome}" disabled="true" size="100" /> 
+                        
+                        <h:outputLabel value="Valor R$"/>
+                        <b:inputText value="#{consultaController.consulta.valor}" /> 
+                        <p:outputLabel value="Observação" />
+						<b:inputText value="#{consultaController.consulta.observacao}"/> 
+						
+                        <h:outputLabel value="Tratamento"/>
+                        <b:selectOneMenu id="lista"  value="#{consultaController.consulta.tratamento.id}" style="width:200px;">
+                            <f:selectItem itemLabel="-- Selecione --" itemValue="" />
+                            <f:selectItems value="#{consultaController.listagemTratamento}" 
+                                           var ="x" itemLabel="#{x.descricao}" itemValue="#{x.id}" />
+                        </b:selectOneMenu>
+                         
+        <p:outputLabel for="odonto" value="Odontograma:" />
+        <p:selectOneRadio id="odonto" value="#">
+            <f:selectItem itemLabel="Decíduos" itemValue="Decíduos" />
+            <f:selectItem itemLabel="Permanente" itemValue="Permanente" />
+        </p:selectOneRadio>
+        
+        <h4>Selecione o dente para o procedimento:</h4>
+                <h:commandLink  actionListener="#{consultaController.adicionarConsultaOperacao}"  >
+      				<h:graphicImage id="pic" value="/resourcers/images/dentes/18.jpg" cache="false" width="70" height="180"/>
+      				<f:param name="idDente" value="18" />
+      			</h:commandLink>
+                <h:graphicImage  value="/resourcers/images/dentes/17.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/16.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/15.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/14.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/13.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/12.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/11.jpg" cache="false" width="70" height="180" />
+         
+         		<h:graphicImage  value="/resourcers/images/dentes/21.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/22.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/23.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/24.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/25.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/26.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/27.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/28.jpg" cache="false" width="70" height="180" />
+                
+                <h:graphicImage  value="/resourcers/images/dentes/48.jpg" cache="false" width="70" height="180" />
+               	<h:graphicImage  value="/resourcers/images/dentes/47.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/46.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/45.jpg" cache="false" width="70" height="180" />
+               	<h:graphicImage  value="/resourcers/images/dentes/44.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/43.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/42.jpg" cache="false" width="70" height="180" />
+               	<h:graphicImage  value="/resourcers/images/dentes/41.jpg" cache="false" width="70" height="180" />
+               	
+                <h:graphicImage  value="/resourcers/images/dentes/31.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/32.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/33.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/34.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/35.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/36.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/37.jpg" cache="false" width="70" height="180" />
+         		<h:graphicImage  value="/resourcers/images/dentes/38.jpg" cache="false" width="70" height="180" />
+ 
+                 	 <p:dataTable id="tabela" var="item" value="#{consultaController.listaConsultaOperacoes}" style="margin-top:10px;" emptyMessage="Não há procedimentos adicionados">    
+                 	 <f:facet name="header">
+                 	      <h:outputLabel value="Procedimentos" />
+                 	 </f:facet>
+                 	 <p:column headerText="N°" >
+                          <h:outputText value="#{item.numero}"/>
+                      </p:column>   
+                      <p:column headerText="Valor R$" >
+                          <h:outputText value="#{item.valor}"/>
+                      </p:column> 
+                      <p:column headerText="Tratamento" >
+                          <h:outputText value="#{item.tratamento.descricao}"/>
+                      </p:column>            
+                      <p:column headerText="Dente" >
+                        <h:outputText value="#{item.denteArcadaDentaria}"/>
+                      </p:column>
+                       <p:column headerText="Observação" >
+                         <h:outputText value="#{item.observacao}" />
+                      </p:column>
+                       <p:column width="50">
+                        <p:commandButton  action="#{consultaController.removerConsultaOperacao}" icon="ui-icon-close" update="tabela"  >
+                                 <f:setPropertyActionListener target="#{consultaController.consulta}" value="#{item}"  />             
+                        </p:commandButton>
+                        </p:column>
+                      </p:dataTable>
+  			         
+  			         <b:commandButton action="#{consultaController.iniciarPasso1}" value="Voltar" style="margin-bottom:20px;margin-top:10px; margin-right:2px; width:150px;"/>	       
+                    <b:commandButton action="#{consultaController.iniciarPasso3}" value="Avançar" style="margin-bottom:20px;margin-top:10px; width:150px;"/>
+
+            </h:form>
+            </f:view>
+        </ui:define>
+    </ui:composition>
+</html>

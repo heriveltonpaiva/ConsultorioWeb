@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+     <ui:composition template="/template.xhtml">
+        <ui:define name="corpo">
+            <h:form id="form" >
+                <h2>Finalizar Consulta</h2>
+                
+                        <p:outputLabel value="Número"/>
+                        <b:inputText value="#{consultaController.consulta.consultaGeral.numeroProtocolo}" disabled="true" /> 
+                        <p:outputLabel value="Valor R$"/>
+                        <b:inputText value="#{consultaController.consulta.consultaGeral.valorTotal}"  /> 
+                       	
+                       	<p:outputLabel value="Paciente:"/>
+                        <b:inputText value="#{consultaController.consulta.pessoa.nome}" disabled="true" /> 
+                     
+						<p:outputLabel value="Tempo de Atendimento:"/>
+                        <b:inputText value="#{consultaController.consulta.consultaGeral.tempoAtendimento}" disabled="true" /> 
+                       
+                        <p:outputLabel value="Observação" />
+						<b:inputText value="#{consultaController.consulta.consultaGeral.observacao}"/> 
+						
+                       	<h:outputLabel value="Status"/>
+                        <b:selectOneMenu id="lista"  value="#{consultaController.consulta.consultaGeral.status}" style="width:200px;">
+                            <f:selectItem itemLabel="-- Selecione --" itemValue="" />
+                            <f:selectItem itemLabel="Inicial" itemValue="1" />
+                            <f:selectItem itemLabel="Retorno" itemValue="2" />
+                            <f:selectItem itemLabel="Em Tratamento" itemValue="3" />
+                            <f:selectItem itemLabel="Finalizada" itemValue="4" />
+                            
+                        </b:selectOneMenu>
+                
+                  	<b:commandButton action="#{consultaController.iniciarPasso2}" value="Voltar" style="margin-bottom:20px; margin-top:10px;margin-right:2px; width:150px;"/>	       
+                    <b:commandButton action="#{consultaController.finalizarConsulta}" value="Finalizar" style="margin-bottom:20px; margin-top:10px;width:150px;"/>
+                    
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />     
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

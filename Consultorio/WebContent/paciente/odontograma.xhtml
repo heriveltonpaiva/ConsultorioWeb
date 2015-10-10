@@ -1,0 +1,86 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="corpo">
+        <h:form id="formtable">
+        <h2>Odontograma</h2>
+      
+      			<h:outputLabel value="Nome do Paciente:" />
+         
+                 <p:autoComplete id="autoCompletePaciente"  value="#{odontogramaController.paciente}" completeMethod="#{pacienteController.completePaciente}" 
+                  var="pessoa" itemLabel="#{pessoa.nome}" itemValue="#{pessoa}" converter="pacienteConverter" > 
+                  <p:ajax event="itemSelect" listener="#{odontogramaController.exibirHistorico}" update="formtable" />  
+                  </p:autoComplete>
+                <br/>
+      			<h:commandLink  actionListener="#{odontogramaController.exibirHistorico}" >
+      				<h:graphicImage id="pic" value="/resourcers/images/dentes/18.jpg" cache="false" width="70" height="250"/>
+      				<f:param name="idDente" value="18" />
+      			</h:commandLink>
+                <h:graphicImage  value="/resourcers/images/dentes/17.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/16.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/15.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/14.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/13.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/12.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/11.jpg" cache="false" width="70" height="250" />
+         
+         		<h:graphicImage  value="/resourcers/images/dentes/21.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/22.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/23.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/24.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/25.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/26.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/27.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/28.jpg" cache="false" width="70" height="250" />
+                
+                <h:graphicImage  value="/resourcers/images/dentes/48.jpg" cache="false" width="70" height="250" />
+               	<h:graphicImage  value="/resourcers/images/dentes/47.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/46.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/45.jpg" cache="false" width="70" height="250" />
+               	<h:graphicImage  value="/resourcers/images/dentes/44.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/43.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/42.jpg" cache="false" width="70" height="250" />
+               	<h:graphicImage  value="/resourcers/images/dentes/41.jpg" cache="false" width="70" height="250" />
+               	
+                <h:graphicImage  value="/resourcers/images/dentes/31.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/32.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/33.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/34.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/35.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/36.jpg" cache="false" width="70" height="250" />
+                <h:graphicImage  value="/resourcers/images/dentes/37.jpg" cache="false" width="70" height="250" />
+         		<h:graphicImage  value="/resourcers/images/dentes/38.jpg" cache="false" width="70" height="250" />
+      
+      
+         	<p:dataTable id="tabela" var="item" value="#{odontogramaController.listHistoricoDentario}" style="margin-top:20px">  
+                   <f:facet name="header">
+						Histórico do Paciente
+					</f:facet>             
+                      <p:column headerText="N°">
+                          <h:outputText value="#{item.numero}"/>
+                      </p:column>   
+                      <p:column headerText="Data">
+                          <h:outputText value="#{item.consultaGeral.dataConsulta}" pattern="dd/MM/yyyy"/>
+                      </p:column>  
+                      <p:column headerText="Procedimentos">
+                          <h:outputText value="#{item.tratamento.descricao}"/>
+                      </p:column>  
+                      <p:column headerText="Observação ">
+                          <h:outputText value="#{item.observacao}"/>
+                      </p:column>  
+                      <p:column headerText="Dente">
+                          <h:outputText value="#{item.denteArcadaDentaria}"/>
+                      </p:column>           
+                     
+                  </p:dataTable>
+      
+        </h:form>
+      
+      </ui:define>
+    </ui:composition>
+</html>
