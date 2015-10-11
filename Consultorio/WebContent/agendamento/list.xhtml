@@ -16,7 +16,17 @@
                
         </h:panelGrid>    
          
-                  <p:dataTable id="tabela" var="item" value="#{agendamentoController.listagem}" style="margin-bottom:20px;">
+           <h:panelGrid columns="3">
+               		<p:outputLabel  value="Data Inicio" /> 
+               		<p:outputLabel  value="Data Fim" /> 
+        		    <p:outputLabel  value="" /> 
+        		    
+        			<p:calendar id="dataInicio" value="#{agendamentoController.dataInicio}"  style="margin-right:10px;" mask="99/99/9999"/>
+        			<p:calendar id="dataFinal" value="#{agendamentoController.dataFinal}"  style="margin-right:10px;" mask="99/99/9999"/>
+               <b:commandButton action="#{agendamentoController.carregarListagem}" value="Buscar" style="width:150px;" />
+			   </h:panelGrid>
+         
+                  <p:dataTable id="tabela" var="item" value="#{agendamentoController.listagem}" style="margin-bottom:20px;margin-top:10px;">
                       
                       <p:column headerText="N°" width="60">
                           <h:outputText value="#{item.numero}"/>

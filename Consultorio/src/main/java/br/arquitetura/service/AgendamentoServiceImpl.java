@@ -1,7 +1,11 @@
 package br.arquitetura.service;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import br.arquitetura.dao.AgendamentoDao;
 import br.arquitetura.dominio.Agendamento;
 
 @Service
@@ -19,6 +23,10 @@ public class AgendamentoServiceImpl extends GenericServiceImpl<Agendamento> impl
 		return super.nextSequence(SEQUENCE_NUMERO_AGENDAMENTO);
 	}
 	
+	public List<Agendamento> findAllAgendamentoByPeriodo(Date dataInicio, Date dataFinal){
+		AgendamentoDao dao = new AgendamentoDao();
+		return dao.findAllAgendamentoByPeriodo(dataInicio, dataFinal);
+	}
 	
 	
 }

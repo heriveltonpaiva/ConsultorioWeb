@@ -1,6 +1,7 @@
 package br.arquitetura.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -11,16 +12,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.arquitetura.dominio.Agendamento;
-import br.arquitetura.dominio.CategoriaTratamento;
 import br.arquitetura.dominio.Expediente;
 import br.arquitetura.dominio.Pessoa;
-import br.arquitetura.dominio.Tratamento;
 import br.arquitetura.service.AgendamentoServiceImpl;
-import br.arquitetura.service.CategoriaTratamentoServiceImpl;
-import br.arquitetura.service.ExpedienteService;
 import br.arquitetura.service.ExpedienteServiceImpl;
 import br.arquitetura.service.PessoaServiceImpl;
-import br.arquitetura.service.TratamentoServiceImpl;
 
 @Component
 @Scope("session")
@@ -35,7 +31,9 @@ public class AgendamentoController {
 	private List<Agendamento> listagem;
     private List<Pessoa> listagemPacientes;
 	private List<Expediente> listagemExpedientes;
-    
+    private Date dataInicio;
+    private Date dataFinal;
+	
 	public AgendamentoController() {
 		agendamentoService = new AgendamentoServiceImpl();
 		agendamento = new Agendamento();
@@ -92,7 +90,8 @@ public class AgendamentoController {
 	
 	@Transactional
 	public String carregarListagem(){
-		listagem = agendamentoService.listarTodos("Agendamento");
+		listagem = agendamentoService.findAllAgendamentoByPeriodo(dataInicio, dataFinal);
+
 		return PaginasUtil.LISTAR_AGENDAMENTOS;
 	}
 	
@@ -155,6 +154,18 @@ public class AgendamentoController {
 	}
     public int getIdExpediente() {
 		return idExpediente;
+	}
+    public Date getDataFinal() {
+		return dataFinal;
+	}
+    public void setDataFinal(Date dataFinal) {
+		this.dataFinal = dataFinal;
+	}
+    public Date getDataInicio() {
+		return dataInicio;
+	}
+    public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
 	}
     
 	public void exibirMensagemSucesso(String operacao){
