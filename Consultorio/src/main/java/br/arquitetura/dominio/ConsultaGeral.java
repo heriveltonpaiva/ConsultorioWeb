@@ -122,6 +122,75 @@ public class ConsultaGeral implements Serializable{
     public void setParcelas(int parcelas) {
 		this.parcelas = parcelas;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((agendamento == null) ? 0 : agendamento.hashCode());
+		result = prime * result + ((dataConsulta == null) ? 0 : dataConsulta.hashCode());
+		result = prime * result + id;
+		result = prime * result + numeroProtocolo;
+		result = prime * result + ((observacao == null) ? 0 : observacao.hashCode());
+		result = prime * result + parcelas;
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((tempoAtendimento == null) ? 0 : tempoAtendimento.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(valorPago);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(valorTotal);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ConsultaGeral other = (ConsultaGeral) obj;
+		if (agendamento == null) {
+			if (other.agendamento != null)
+				return false;
+		} else if (!agendamento.equals(other.agendamento))
+			return false;
+		if (dataConsulta == null) {
+			if (other.dataConsulta != null)
+				return false;
+		} else if (!dataConsulta.equals(other.dataConsulta))
+			return false;
+		if (id != other.id)
+			return false;
+		if (numeroProtocolo != other.numeroProtocolo)
+			return false;
+		if (observacao == null) {
+			if (other.observacao != null)
+				return false;
+		} else if (!observacao.equals(other.observacao))
+			return false;
+		if (parcelas != other.parcelas)
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		if (tempoAtendimento == null) {
+			if (other.tempoAtendimento != null)
+				return false;
+		} else if (!tempoAtendimento.equals(other.tempoAtendimento))
+			return false;
+		if (Double.doubleToLongBits(valorPago) != Double.doubleToLongBits(other.valorPago))
+			return false;
+		if (Double.doubleToLongBits(valorTotal) != Double.doubleToLongBits(other.valorTotal))
+			return false;
+		return true;
+	}
     
 
+    
+    
 }

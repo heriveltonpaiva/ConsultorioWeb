@@ -39,5 +39,7 @@ public class ConsultaDao extends GenericDaoImpl{
 		
 		return (List<Consulta>) q.list();
 	}
+	
+	
 
 }

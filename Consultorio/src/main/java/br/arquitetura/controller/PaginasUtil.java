@@ -27,6 +27,8 @@ public class PaginasUtil {
 	public static final String CONSULTA_PASSO_2 = "/consulta/passo2.xhtml";
 	public static final String CONSULTA_PASSO_3 = "/consulta/passo3.xhtml";
 	
+	public static final String SAIDA_FINANCEIRO = "/financeiro/saida_financeiro.xhtml";
+
 
 
 }

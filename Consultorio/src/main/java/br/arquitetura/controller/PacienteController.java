@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -25,6 +26,7 @@ import br.arquitetura.dominio.DenteArcadaDentaria;
 import br.arquitetura.dominio.Endereco;
 import br.arquitetura.dominio.Estado;
 import br.arquitetura.dominio.Medicacao;
+import br.arquitetura.dominio.PacienteAtendimento;
 import br.arquitetura.dominio.Pessoa;
 import br.arquitetura.dominio.TipoAcarda;
 import br.arquitetura.dominio.TipoPessoa;
@@ -172,12 +174,15 @@ public class PacienteController {
 	
 	public void adicionarPacienteNaFilaEspera(){  
    
+		cadastrarPacienteAtendimento();
+		
 		if(paciente.getId()!=0){
 			listaEsperaPacientes.add(paciente);
 		}else{			
 			paciente.setAtivo(false);
 			listaEsperaPacientes.add(paciente); 
 		}
+		
         paciente = new Pessoa();
 	}
 	
@@ -383,4 +388,25 @@ public class PacienteController {
     public void setListaEsperaPacientes(List<Pessoa> listaEsperaPacientes) {
 		this.listaEsperaPacientes = listaEsperaPacientes;
 	}
+    
+    private void cadastrarPacienteAtendimento(){
+    	
+    	PacienteAtendimento pacienteAtendimento = new PacienteAtendimento();
+    	
+    	pacienteAtendimento.setAtendido(false);
+    	pacienteAtendimento.setDataHorario(new Date());
+		pacienteAtendimento.setNomePaciente(paciente.getNome());
+        pacienteAtendimento.setObservacao(paciente.getObservacao());
+        pacienteAtendimento.setDesistencia(false);
+        
+        //consultar ordem de chegada do paciente no banco..
+        //pacienteAtendimento.setOrdemChegada(ordemChegada);
+       
+    	if(paciente.getId()==0){
+    		pacienteAtendimento.setPaciente(null);
+    	}else{
+    		pacienteAtendimento.setPaciente(paciente);
+    	}
+    	
+    }
 }

@@ -65,7 +65,9 @@
                           <h:outputText value="#{item.numero}"/>
                       </p:column>   
                       <p:column headerText="Data">
-                          <h:outputText value="#{item.consultaGeral.dataConsulta}" pattern="dd/MM/yyyy"/>
+                          <h:outputText value="#{item.consultaGeral.dataConsulta}">
+                          	<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                          </h:outputText>
                       </p:column>  
                       <p:column headerText="Procedimentos">
                           <h:outputText value="#{item.tratamento.descricao}"/>

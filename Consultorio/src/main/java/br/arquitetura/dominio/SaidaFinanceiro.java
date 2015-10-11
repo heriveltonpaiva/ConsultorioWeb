@@ -26,6 +26,8 @@ public class SaidaFinanceiro implements Serializable {
 	@Column(name="data_cadastro")
 	private Date dataCadastro;
 	
+	private double valor;
+	
 	@ManyToOne
 	@JoinColumn(name="id_arquivo", referencedColumnName="id")
 	private Arquivo arquivo;
@@ -44,6 +46,12 @@ public class SaidaFinanceiro implements Serializable {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	public double getValor() {
+		return valor;
+	}
+	public void setValor(double valor) {
+		this.valor = valor;
 	}
 
 	public Date getDataSaida() {

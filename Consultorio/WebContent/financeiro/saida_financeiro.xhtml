@@ -3,26 +3,57 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
       
      <ui:composition template="/template.xhtml">
         <ui:define name="corpo">
-            <h:form id="form">
+            <h:form id="form" enctype="multipart/form-data">
              
-             <h2>Custos Operacionais</h2>
+             <h2>Saída Financeiro</h2>
             
                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />     
                
+               <h:panelGrid columns="3">
                         <h:outputLabel value="Descricão*"/>
-                        <b:inputText value="#{tratamentoController.tratamento.descricao}"/> 
-                  		
-                  		<h:outputLabel value="Nota Fiscal:"/>
+                        <h:outputLabel value="Valor R$*"/>
+                        <h:outputLabel value="Nota Fiscal:"/>
+                        
+  						<b:inputText value="#{financeiroController.saidaFinanceiro.descricao}" size="200" /> 
+                        <b:inputText value="#{financeiroController.saidaFinanceiro.valor}" size="50" /> 
                   	    <p:fileUpload  id="fileAnexo" value="#{pacienteController.file}" mode="simple" sizeLimit="1000000" style="margin-left:10px; margin-top:-10px;"
                          allowTypes="/(\.|\/)(doc|docx|xls|xlsx|pdf|jpg)$/"  invalidFileMessage="Formato de arquivo invalido"/>
-                    
-                    <b:commandButton action="#{tratamentoController.salvar}" value="Registrar" style="margin-bottom:20px; width:200px;" />
-
-            </h:form>
+                        
+             </h:panelGrid>
+             <b:commandButton action="#{financeiroController.cadastrarSaida}" value="Registrar" style="margin-bottom:20px; width:200px;" />
+            
+             <p:dataTable id="tabela" var="item" value="#{financeiroController.listaSaidaFinanceiro}" style="margin-bottom:20px;" emptyMessage="Nenhum registro encontrado.">
+                      
+                      <p:column headerText="Descrição" >
+                          <h:outputText value="#{item.descricao}"/>
+                      </p:column> 
+                       <p:column headerText="Valor" width="100">
+                          <h:outputText value="#{item.valor}">
+                             <f:convertNumber type="currency" currencySymbol="R$" />
+                          </h:outputText>
+                      </p:column>
+                      <p:column headerText="Data" width="100">
+                          <h:outputText value="#{item.dataSaida}">
+                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/> 
+                          </h:outputText>
+                      </p:column>  
+                      <p:column headerText="Nota Fiscal" width="120">
+                          <p:commandButton value="Download"  icon="ui-icon-arrowthick-1-s">
+    						 <p:fileDownload value="#{saidaFinanceiroController.fileDownload}" />      						 
+						  </p:commandButton>  
+                      </p:column>
+                      
+                      <f:facet name="footer">
+        					 <h:outputText value="#{fn:length(financeiroController.listaSaidaFinanceiro)} Registros Encontrados"/>
+    				  </f:facet>
+              </p:dataTable>        
+         </h:form>
+            
         </ui:define>
     </ui:composition>
 </html>
