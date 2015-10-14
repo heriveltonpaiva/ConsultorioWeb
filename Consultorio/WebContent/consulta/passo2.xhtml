@@ -4,79 +4,105 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://java.sun.com/jsf/core">
-
+     
      <ui:composition template="/template.xhtml">
         <ui:define name="corpo">
         <f:view>
+       
             <h:form id="form" >
-                <h2>Procedimentos/Operações</h2>
+                <h3>Procedimentos</h3>
 
                  <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />     
-
+                 <div>               
+                 
+                 <h:panelGrid columns="4"> 
 					    <h:outputLabel value="Número"/>
-                        <b:inputText value="#{consultaController.consulta.numero}" /> 
-                     
-                        <h:outputLabel value="Paciente:"/>
-                        <b:inputText value="#{consultaController.consulta.pessoa.nome}" disabled="true" size="100" /> 
-                        
-                        <h:outputLabel value="Valor R$"/>
+					    <h:outputLabel value="Tratamento"/> 
+					    <h:outputLabel value="Valor R$"/>
+					    <h:outputLabel value="Paciente"/>
+					    
+                        <b:inputText value="#{consultaController.consulta.numero}" size="6" /> 
+	                        <b:selectOneMenu id="lista"  value="#{consultaController.consulta.tratamento.id}">
+		                            <f:selectItem itemLabel="-- Selecione --" itemValue="" />
+		                            <f:selectItems value="#{consultaController.listagemTratamento}" var ="x" itemLabel="#{x.descricao}" itemValue="#{x.id}" />
+		                     </b:selectOneMenu>
                         <b:inputText value="#{consultaController.consulta.valor}"/> 
+                        <b:inputText value="#{consultaController.consulta.pessoa.nome}" disabled="true" style="margin-left:5px;"/> 
+                       	
+                   </h:panelGrid>  
+                     
+                     <h:panelGrid columns="1">   
                         <p:outputLabel value="Observação" />
-						<b:inputText value="#{consultaController.consulta.observacao}"/> 
-						
-                        <h:outputLabel value="Tratamento"/>
-                        <b:selectOneMenu id="lista"  value="#{consultaController.consulta.tratamento.id}" style="width:200px;">
-                            <f:selectItem itemLabel="-- Selecione --" itemValue="" />
-                            <f:selectItems value="#{consultaController.listagemTratamento}" 
-                                           var ="x" itemLabel="#{x.descricao}" itemValue="#{x.id}" />
-                        </b:selectOneMenu>
-                         
-        <p:outputLabel for="odonto" value="Odontograma:" />
-        <p:selectOneRadio id="odonto" value="#">
-            <f:selectItem itemLabel="Decíduos" itemValue="Decíduos" />
-            <f:selectItem itemLabel="Permanente" itemValue="Permanente" />
-        </p:selectOneRadio>
+						<p:inputTextarea value="#{consultaController.consulta.observacao}" cols="100" rows="3" /> 
+					</h:panelGrid>	
+                  </div> 
         
         <h4>Selecione o dente para o procedimento:</h4>
                 <h:commandLink  actionListener="#{consultaController.adicionarConsultaOperacao}"  >
-      				<h:graphicImage id="pic" value="/resourcers/images/dentes/18.jpg" cache="false" width="70" height="180"/>
+      				<h:graphicImage id="pic" value="/resourcers/images/dentes/18.jpg" cache="false" width="50" height="100"/>
       				<f:param name="idDente" value="18" />
       			</h:commandLink>
-                <h:graphicImage  value="/resourcers/images/dentes/17.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/16.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/15.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/14.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/13.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/12.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/11.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/17.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/16.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/15.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/14.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/13.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/12.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/11.jpg" cache="false" width="50" height="100" />
          
-         		<h:graphicImage  value="/resourcers/images/dentes/21.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/22.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/23.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/24.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/25.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/26.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/27.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/28.jpg" cache="false" width="70" height="180" />
+         		<h:graphicImage  value="/resourcers/images/dentes/21.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/22.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/23.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/24.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/25.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/26.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/27.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/28.jpg" cache="false" width="50" height="100" /> <br></br>
                 
-                <h:graphicImage  value="/resourcers/images/dentes/48.jpg" cache="false" width="70" height="180" />
-               	<h:graphicImage  value="/resourcers/images/dentes/47.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/46.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/45.jpg" cache="false" width="70" height="180" />
-               	<h:graphicImage  value="/resourcers/images/dentes/44.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/43.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/42.jpg" cache="false" width="70" height="180" />
-               	<h:graphicImage  value="/resourcers/images/dentes/41.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/48.jpg" cache="false" width="50" height="100" />
+               	<h:graphicImage  value="/resourcers/images/dentes/47.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/46.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/45.jpg" cache="false" width="50" height="100" />
+               	<h:graphicImage  value="/resourcers/images/dentes/44.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/43.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/42.jpg" cache="false" width="50" height="100" />
+               	<h:graphicImage  value="/resourcers/images/dentes/41.jpg" cache="false" width="50" height="100" />
                	
-                <h:graphicImage  value="/resourcers/images/dentes/31.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/32.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/33.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/34.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/35.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/36.jpg" cache="false" width="70" height="180" />
-                <h:graphicImage  value="/resourcers/images/dentes/37.jpg" cache="false" width="70" height="180" />
-         		<h:graphicImage  value="/resourcers/images/dentes/38.jpg" cache="false" width="70" height="180" />
+                <h:graphicImage  value="/resourcers/images/dentes/31.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/32.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/33.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/34.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/35.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/36.jpg" cache="false" width="50" height="100" />
+                <h:graphicImage  value="/resourcers/images/dentes/37.jpg" cache="false" width="50" height="100" />
+         		<h:graphicImage  value="/resourcers/images/dentes/38.jpg" cache="false" width="50" height="100" /><br></br>
  
+                <h:panelGroup>
+                
+                    
+	  				<h:graphicImage  value="/resourcers/images/dentes/55.jpg" cache="false" width="50" height="100"/>
+	                <h:graphicImage  value="/resourcers/images/dentes/54.jpg" cache="false" width="50" height="100" />
+	                <h:graphicImage  value="/resourcers/images/dentes/53.jpg" cache="false" width="50" height="100" />
+	                <h:graphicImage  value="/resourcers/images/dentes/52.jpg" cache="false" width="50" height="100" />
+	                <h:graphicImage  value="/resourcers/images/dentes/51.jpg" cache="false" width="50" height="100" />
+	                <h:graphicImage  value="/resourcers/images/dentes/61.jpg" cache="false" width="50" height="100" />
+	                <h:graphicImage  value="/resourcers/images/dentes/62.jpg" cache="false" width="50" height="100" />
+	         		<h:graphicImage  value="/resourcers/images/dentes/63.jpg" cache="false" width="50" height="100" />
+	 				<h:graphicImage  value="/resourcers/images/dentes/64.jpg" cache="false" width="50" height="100" />
+	         		<h:graphicImage  value="/resourcers/images/dentes/65.jpg" cache="false" width="50" height="100" /><br></br>
+	         		
+	         	
+	         		<h:graphicImage  value="/resourcers/images/dentes/85.jpg" cache="false" width="50" height="100" />
+	                <h:graphicImage  value="/resourcers/images/dentes/84.jpg" cache="false" width="50" height="100" />
+	                <h:graphicImage  value="/resourcers/images/dentes/83.jpg" cache="false" width="50" height="100" />
+	                <h:graphicImage  value="/resourcers/images/dentes/82.jpg" cache="false" width="50" height="100" />
+	                <h:graphicImage  value="/resourcers/images/dentes/81.jpg" cache="false" width="50" height="100" />
+	                <h:graphicImage  value="/resourcers/images/dentes/71.jpg" cache="false" width="50" height="100" />
+	                <h:graphicImage  value="/resourcers/images/dentes/72.jpg" cache="false" width="50" height="100" />
+	         		<h:graphicImage  value="/resourcers/images/dentes/73.jpg" cache="false" width="50" height="100" />
+	 				<h:graphicImage  value="/resourcers/images/dentes/74.jpg" cache="false" width="50" height="100" />
+	         		<h:graphicImage  value="/resourcers/images/dentes/75.jpg" cache="false" width="50" height="100" />
+ 				</h:panelGroup>
                  	 <p:dataTable id="tabela" var="item" value="#{consultaController.listaConsultaOperacoes}" style="margin-top:10px;" emptyMessage="Não há procedimentos adicionados">    
                  	 <f:facet name="header">
                  	      <h:outputLabel value="Procedimentos" />

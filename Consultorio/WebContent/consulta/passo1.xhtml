@@ -8,47 +8,82 @@
      <ui:composition template="/template.xhtml">
         <ui:define name="corpo">
             <h2>Iniciar Consulta Odontológica</h2>
+
+
+
             
             	<h:form id="formAutoComplete">
 
-         		<h:outputLabel value="Nome do Paciente:" />
+ 					<p:dataTable id="tabelaFilaeEspera" var="paciente" value="#{pacienteController.listaEsperaPacientes}" style="margin-top:20px; margin-bottom:20px;" emptyMessage="Nenhum paciente na fila de atendimento." rendered="#{not empty pacienteController.listaEsperaPacientes}">  
+	                   <f:facet name="header">
+							Lista de Espera para Atendimento 
+						</f:facet>
+	                	<p:column headerText="N°" width="50">
+	                          <h:outputText value="x"/>
+	                      </p:column> 
+	                     <p:column headerText="Paciente" >
+	                          <h:outputText value="#{paciente.nome}"/>
+	                     </p:column> 
+	                     <p:column headerText="Observação" >
+	                          <h:outputText value="#{paciente.observacao}"/>
+	                     </p:column> 
+	                      <p:column headerText="Avulso" width="90" >
+	                          <h:outputText value="#{paciente.ativo}"/>
+	                     </p:column>  
+	                     
+	                      <p:column width="160">
+                    	<b:commandButton action="#{consultaController.iniciarPasso2}" value="Iniciar Procedimento" style="margin-bottom:2px; width:140px;">
+                    	     <f:setPropertyActionListener value="#{item.pessoa}" target="#{consultaController.pacienteDaConsulta}" />
+                    	     <f:setPropertyActionListener value="#{item}" target="#{consultaController.agendamentoDaConsulta}" />
+                    	
+                    	</b:commandButton>
+                    	
+                    	<b:commandButton action="#{consultaController.iniciarPasso3}" value="Finalizar Atendimento" style="margin-bottom:2px; width:140px;">
+                    	     <f:setPropertyActionListener value="#{item.pessoa}" target="#{consultaController.pacienteDaConsulta}" />
+                    	     <f:setPropertyActionListener value="#{item}" target="#{consultaController.agendamentoDaConsulta}" />
+                    	</b:commandButton>
+                    	
+                    	<b:commandButton action="#{historicoConsultaController.exibirHistoricoPaciente}" value="Exibir Histórico" style="width:140px;">
+                    	     <f:setPropertyActionListener value="#{item.pessoa}" target="#{historicoConsultaController.paciente}" />
+                    	</b:commandButton>
+                        </p:column>
+	                     
+                	</p:dataTable>
+
+
+         		<h:outputLabel value="Paciente:" />
          
-                 <p:autoComplete id="autoCompletePaciente"  value="#{pacienteController.paciente}" completeMethod="#{pacienteController.completePaciente}" 
+                 <p:autoComplete id="autoCompletePaciente"  value="#{pacienteController.paciente}" completeMethod="#{pacienteController.completePaciente}" size="70" 
                   var="pessoa" itemLabel="#{pessoa.nome}" itemValue="#{pessoa}" converter="pacienteConverter" > 
                   <p:ajax event="itemSelect" listener="#{consultaController.carregaPaciente}" update="formAutoComplete, tabela"  />                   
                   </p:autoComplete>
                   
-                  <p:fieldset legend="Informações do paciente"  toggleable="true" toggleSpeed="700" style="font-size:12px; margin-top:20px">
-                      
-                      <h:panelGroup rendered="#{ not empty consultaController.consulta.pessoa.nome}">
-                  
+                 
+                    <p:panelGrid rendered="#{ not empty consultaController.consulta.pessoa.nome}" columns="4" style="margin-top:10px;">
+							<f:facet name="header">
+								<p:outputLabel value="Informações do Paciente"/>
+							</f:facet>
 					<p:outputLabel value="Nome" />
-					<b:inputText value="#{consultaController.consulta.pessoa.nome}" disabled="true" />
-
 					<p:outputLabel value="CPF" />
-					<b:inputText value="#{consultaController.consulta.pessoa.cpf}" disabled="true"/>
-					
 					<p:outputLabel value="RG" />
+					<p:outputLabel value="Data de Nascimento"/>
+					
+					<b:inputText value="#{consultaController.consulta.pessoa.nome}" disabled="true" />
+					<b:inputText value="#{consultaController.consulta.pessoa.cpf}" disabled="true"/>
 					<b:inputText value="#{consultaController.consulta.pessoa.rg}" disabled="true"/>
+					<b:inputText value="#{consultaController.consulta.pessoa.dataNascimento}" disabled="true"/>
 
-					<p:outputLabel value="Data de Nascimento:" disabled="true"/>
-        			<b:inputText value="#{consultaController.consulta.pessoa.dataNascimento}" disabled="true"/>
-
-                        <p:outputLabel value="Endereco*"/>
-                        <b:inputText value="#{consultaController.consulta.pessoa.endereco.rua}" size="52" disabled="true"/>
-
-                        <p:outputLabel value="Numero"/>
-                        <b:inputText value="#{consultaController.consulta.pessoa.endereco.numero}" size="5" maxlength="5" disabled="true"/>
-                     
-                        <p:outputLabel value="Cidade*"/>
-                        <b:inputText value="#{consultaController.consulta.pessoa.endereco.cidade}" size="30" disabled="true"/>
-                        <p:outputLabel value="Celular"/>
-                        <b:inputText value="#{consultaController.consulta.pessoa.contato.celular}" size="20" maxlength="9" disabled="true"/>
-                
-                  </h:panelGroup>
-                      
-               </p:fieldset>
-         
+					<p:outputLabel value="Endereco*"/>
+                    <p:outputLabel value="Numero"/>
+					<p:outputLabel value="Cidade*"/>
+                    <p:outputLabel value="Celular"/>
+					<b:inputText value="#{consultaController.consulta.pessoa.endereco.rua}" size="70" disabled="true"/>
+					<b:inputText value="#{consultaController.consulta.pessoa.endereco.numero}" size="5" maxlength="5" disabled="true"/>
+                    <b:inputText value="#{consultaController.consulta.pessoa.endereco.cidade}" size="30" disabled="true"/>
+                    <b:inputText value="#{consultaController.consulta.pessoa.contato.celular}" size="20" maxlength="9" disabled="true"/>
+ 
+                  </p:panelGrid>
+               
                <p:dataTable id="tabela" var="item" value="#{historicoConsultaController.listHistoricoConsultas}" style="margin-top:20px; margin-bottom:20px;">  
                    <f:facet name="header">
 						Histórico de Consulta do Paciente
@@ -69,9 +104,6 @@
                           <h:outputText value="#{item.denteArcadaDentaria}"/>
                       </p:column>          
                   </p:dataTable>
-  			
-                    <b:commandButton action="#{consultaController.iniciarPasso2}" value="Avançar >>" style="margin-bottom:20px; margin-top:20px; width:200px;"/>
-
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />    
                  
             </h:form>
