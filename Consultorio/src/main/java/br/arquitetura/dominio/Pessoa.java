@@ -70,6 +70,13 @@ public class Pessoa implements Serializable{
 
 	@Transient
 	private List<Medicacao> medicacoes;
+
+	/** Váriavel que armazena a ordem de chegada do paciente para o atendimento **/
+	@Transient
+	private int ordemChegada;
+	
+	@Transient
+	private Date horarioChegada;
 	
 	public int getId() {
 		return id;
@@ -279,5 +286,17 @@ public class Pessoa implements Serializable{
 		return result;
 	}
 	
+	public int getOrdemChegada() {
+		return ordemChegada;
+	}
+	public void setOrdemChegada(int ordemChegada) {
+		this.ordemChegada = ordemChegada;
+	}
+	public Date getHorarioChegada() {
+		return horarioChegada;
+	}
+	public void setHorarioChegada(Date horarioChegada) {
+		this.horarioChegada = horarioChegada;
+	}
 	
 }

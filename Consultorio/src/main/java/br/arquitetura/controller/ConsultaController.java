@@ -89,7 +89,8 @@ public class ConsultaController {
 		consulta.setConsultaGeral(new ConsultaGeral());
 		consulta.getConsultaGeral().setAgendamento(agendamentoDaConsulta);
 		consulta.getConsultaGeral().setDataConsulta(new Date());
-		consulta.getConsultaGeral().setNumeroProtocolo(21321);
+		consulta.getConsultaGeral().setNumeroProtocolo(getNumeroConsultaGeral());
+		
 		//consulta.getConsultaGeral().setTempoAtendimento();
 		consulta.getConsultaGeral().setValorTotal(valorTotalConsulta);
 		
@@ -122,10 +123,8 @@ public class ConsultaController {
 			//}
 				
 		}
-		consulta.setTratamento(tratamentoService.listarPorId("Tratamento", consulta.getTratamento().getId()));
-	    
-		
-		
+		consulta.setTratamento(tratamentoService.listarPorId("Tratamento", consulta.getTratamento().getId()));	    
+		consulta.setNumero(getNumeroProcedimento());
 		consulta.setDenteArcadaDentaria(dente);
 		consulta.getDenteArcadaDentaria().setEmTratamento(false);
 		consulta.getDenteArcadaDentaria().setSituacao(1);
@@ -229,4 +228,29 @@ public class ConsultaController {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "" + e.getMessage()));		  	
 	}
 	
+	
+	public int getNumeroProcedimento(){
+		 List<Consulta> lista = consultaService.listarTodos("Consulta");
+		 int proximaNumeracao = lista.size()+listaConsultaOperacoes.size()+1; 
+		 return proximaNumeracao;
+	}
+	
+	public int getNumeroConsultaGeral(){
+		 List<ConsultaGeral> lista = consultaGeralService.listarTodos("ConsultaGeral");
+		 int proximaNumeracao = lista.size()+1; 
+		 return proximaNumeracao;
+	}
+	
+	public String getTempoAtendimento(){
+		
+		Date dataInicio = consulta.getPessoa().getHorarioChegada();
+		Date dataFim = new Date();
+		
+		long diff = dataFim.getTime() - dataInicio.getTime();
+
+		long diffMinutes = diff / (60 * 1000) % 60;
+
+		return diffMinutes+" Minutos.";
+	   
+	}
 }

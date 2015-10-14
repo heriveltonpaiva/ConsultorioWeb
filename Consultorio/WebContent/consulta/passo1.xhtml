@@ -9,54 +9,56 @@
         <ui:define name="corpo">
             <h2>Iniciar Consulta Odontológica</h2>
 
-
-
-            
             	<h:form id="formAutoComplete">
 
- 					<p:dataTable id="tabelaFilaeEspera" var="paciente" value="#{pacienteController.listaEsperaPacientes}" style="margin-top:20px; margin-bottom:20px;" emptyMessage="Nenhum paciente na fila de atendimento." rendered="#{not empty pacienteController.listaEsperaPacientes}">  
+ 					<p:dataTable id="tabelaFilaeEspera" var="paciente" value="#{atendimentoController.listaEsperaPacientes}" style="margin-top:20px; margin-bottom:20px;" emptyMessage="Nenhum paciente na fila de atendimento." rendered="#{not empty atendimentoController.listaEsperaPacientes}">  
 	                   <f:facet name="header">
 							Lista de Espera para Atendimento 
 						</f:facet>
-	                	<p:column headerText="N°" width="50">
-	                          <h:outputText value="x"/>
-	                      </p:column> 
-	                     <p:column headerText="Paciente" >
-	                          <h:outputText value="#{paciente.nome}"/>
-	                     </p:column> 
-	                     <p:column headerText="Observação" >
-	                          <h:outputText value="#{paciente.observacao}"/>
-	                     </p:column> 
-	                      <p:column headerText="Avulso" width="90" >
-	                          <h:outputText value="#{paciente.ativo}"/>
-	                     </p:column>  
+	                	<p:column headerText="Ordem" width="70">
+                          <h:outputText value="#{paciente.ordemChegada}°"/>
+                      </p:column> 
+                     <p:column headerText="Paciente" >
+                          <h:outputText value="#{paciente.nome}"/>
+                     </p:column> 
+                     <p:column headerText="Observação" >
+                          <h:outputText value="#{paciente.observacao}"/>
+                     </p:column> 
+                     <p:column headerText="Horário Chegada" >
+                          <h:outputText value="#{paciente.horarioChegada}">
+                              <f:convertDateTime pattern="HH:mm" timeZone="GMT-03:00"/>  
+                          </h:outputText>
+                     </p:column> 
+                      <p:column headerText="Avulso" width="90" >
+                          <h:outputText value="SIM" rendered="#{!paciente.ativo}"/>
+                          <h:outputText value="NÃO" rendered="#{paciente.ativo}"/>
+                     </p:column>  
 	                     
 	                      <p:column width="160">
-                    	<b:commandButton action="#{consultaController.iniciarPasso2}" value="Iniciar Procedimento" style="margin-bottom:2px; width:140px;">
-                    	     <f:setPropertyActionListener value="#{item.pessoa}" target="#{consultaController.pacienteDaConsulta}" />
-                    	     <f:setPropertyActionListener value="#{item}" target="#{consultaController.agendamentoDaConsulta}" />
-                    	
+                    	<b:commandButton action="#{consultaController.iniciarPasso2}" value="Iniciar Procedimento" style="margin-bottom:2px; width:140px;" look="primary">
+                    	     <f:setPropertyActionListener value="#{paciente}" target="#{consultaController.pacienteDaConsulta}" />                    	
                     	</b:commandButton>
                     	
-                    	<b:commandButton action="#{consultaController.iniciarPasso3}" value="Finalizar Atendimento" style="margin-bottom:2px; width:140px;">
-                    	     <f:setPropertyActionListener value="#{item.pessoa}" target="#{consultaController.pacienteDaConsulta}" />
-                    	     <f:setPropertyActionListener value="#{item}" target="#{consultaController.agendamentoDaConsulta}" />
+                    	<b:commandButton action="#{consultaController.iniciarPasso3}" value="Finalizar Atendimento" style="margin-bottom:2px; width:140px;" look="success">
+                    	     <f:setPropertyActionListener value="#{paciente}" target="#{consultaController.pacienteDaConsulta}" />
                     	</b:commandButton>
                     	
                     	<b:commandButton action="#{historicoConsultaController.exibirHistoricoPaciente}" value="Exibir Histórico" style="width:140px;">
-                    	     <f:setPropertyActionListener value="#{item.pessoa}" target="#{historicoConsultaController.paciente}" />
+                    	     <f:setPropertyActionListener value="#{paciente}" target="#{historicoConsultaController.paciente}" />
                     	</b:commandButton>
                         </p:column>
 	                     
                 	</p:dataTable>
 
 
-         		<h:outputLabel value="Paciente:" />
+         		<h:outputLabel value="Buscar Paciente:" />
          
-                 <p:autoComplete id="autoCompletePaciente"  value="#{pacienteController.paciente}" completeMethod="#{pacienteController.completePaciente}" size="70" 
+                 <p:autoComplete id="autoCompletePaciente"  value="#{atendimentoController.paciente}" completeMethod="#{pacienteController.completePaciente}" size="70" 
                   var="pessoa" itemLabel="#{pessoa.nome}" itemValue="#{pessoa}" converter="pacienteConverter" > 
                   <p:ajax event="itemSelect" listener="#{consultaController.carregaPaciente}" update="formAutoComplete, tabela"  />                   
                   </p:autoComplete>
+                 
+                  <b:commandButton action="#{atendimentoController.adicionarPacienteNaFilaEspera}" value="Adicionar a fila" style="width:140px;margin-left:10px;" look="primary"/>
                   
                  
                     <p:panelGrid rendered="#{ not empty consultaController.consulta.pessoa.nome}" columns="4" style="margin-top:10px;">
@@ -92,7 +94,9 @@
                           <h:outputText value="#{item.numero}"/>
                       </p:column>   
                       <p:column headerText="Data">
-                          <h:outputText value="#{item.consultaGeral.dataConsulta}"/>
+                          <h:outputText value="#{item.consultaGeral.dataConsulta}">
+                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                          </h:outputText>
                       </p:column>  
                       <p:column headerText="Procedimentos">
                           <h:outputText value="#{item.tratamento.descricao}"/>

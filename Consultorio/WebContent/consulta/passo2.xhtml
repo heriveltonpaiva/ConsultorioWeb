@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -21,7 +22,7 @@
 					    <h:outputLabel value="Valor R$"/>
 					    <h:outputLabel value="Paciente"/>
 					    
-                        <b:inputText value="#{consultaController.consulta.numero}" size="6" /> 
+                        <b:inputText value="#{consultaController.numeroProcedimento}" size="6" disabled="true"/> 
 	                        <b:selectOneMenu id="lista"  value="#{consultaController.consulta.tratamento.id}">
 		                            <f:selectItem itemLabel="-- Selecione --" itemValue="" />
 		                            <f:selectItems value="#{consultaController.listagemTratamento}" var ="x" itemLabel="#{x.descricao}" itemValue="#{x.id}" />
@@ -38,6 +39,8 @@
                   </div> 
         
         <h4>Selecione o dente para o procedimento:</h4>
+        
+        		
                 <h:commandLink  actionListener="#{consultaController.adicionarConsultaOperacao}"  >
       				<h:graphicImage id="pic" value="/resourcers/images/dentes/18.jpg" cache="false" width="50" height="100"/>
       				<f:param name="idDente" value="18" />

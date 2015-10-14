@@ -49,7 +49,6 @@ public class PacienteController {
     private List<Estado> listaEstados;
 	private List<Medicacao> listaMedicacoes;
     private Medicacao medicacao;
-	private List<Pessoa> listaEsperaPacientes;
     
     private Pessoa paciente;
 	private List<Pessoa> listagem;
@@ -62,7 +61,6 @@ public class PacienteController {
 		denteArcadaDentariaService = new DenteArcadaDentariaServiceImpl();
 		medicacao = new Medicacao();
 		
-		listaEsperaPacientes = new ArrayList<Pessoa>();
 		listaMedicacoes = new ArrayList<Medicacao>();
 		listagem = new ArrayList<Pessoa>();
 		listagem = pessoaService.listarTodos("Pessoa");
@@ -163,28 +161,6 @@ public class PacienteController {
 	public List<Pessoa> completePaciente(String query) {
         return listagem;
     }
-	
-	/**
-	 * Carrega o paciente do auto complete ajax e exibe suas informações
-	 * @param event
-	 */
-	public void carregarPacienteNaFilaEspera(SelectEvent event){  
-		paciente = ((Pessoa)event.getObject());  
-    }
-	
-	public void adicionarPacienteNaFilaEspera(){  
-   
-		cadastrarPacienteAtendimento();
-		
-		if(paciente.getId()!=0){
-			listaEsperaPacientes.add(paciente);
-		}else{			
-			paciente.setAtivo(false);
-			listaEsperaPacientes.add(paciente); 
-		}
-		
-        paciente = new Pessoa();
-	}
 	
 	public String iniciarCadastro(){
 		return PaginasUtil.CADASTRAR_PACIENTES;
@@ -382,31 +358,6 @@ public class PacienteController {
     public void setListaMedicacoes(List<Medicacao> listaMedicacoes) {
 		this.listaMedicacoes = listaMedicacoes;
 	}
-    public List<Pessoa> getListaEsperaPacientes() {
-		return listaEsperaPacientes;
-	}
-    public void setListaEsperaPacientes(List<Pessoa> listaEsperaPacientes) {
-		this.listaEsperaPacientes = listaEsperaPacientes;
-	}
-    
-    private void cadastrarPacienteAtendimento(){
-    	
-    	PacienteAtendimento pacienteAtendimento = new PacienteAtendimento();
-    	
-    	pacienteAtendimento.setAtendido(false);
-    	pacienteAtendimento.setDataHorario(new Date());
-		pacienteAtendimento.setNomePaciente(paciente.getNome());
-        pacienteAtendimento.setObservacao(paciente.getObservacao());
-        pacienteAtendimento.setDesistencia(false);
-        
-        //consultar ordem de chegada do paciente no banco..
-        //pacienteAtendimento.setOrdemChegada(ordemChegada);
-       
-    	if(paciente.getId()==0){
-    		pacienteAtendimento.setPaciente(null);
-    	}else{
-    		pacienteAtendimento.setPaciente(paciente);
-    	}
-    	
-    }
+
+   
 }
