@@ -21,7 +21,7 @@
                   <h:outputLabel value="Observação:" style="margin-right:5px;"/>
                   <p:inputTextarea value="#{atendimentoController.paciente.observacao}" rows="3" cols="52"/>
                   
-                  <b:commandButton action="#{atendimentoController.adicionarPacienteNaFilaEspera}" value="Adicionar a fila" style="width:140px;margin-left:10px;" look="primary"/>
+                  <b:commandButton action="#{atendimentoController.adicionarPacienteNaFilaEspera}" value="Adicionar a fila" style="width:140px;margin-left:10px;" look="primary" iconAwesome="plus"/>
                   
                   </h:panelGrid>
                    <p:dataTable id="tabelaFilaeEspera" var="paciente" value="#{atendimentoController.listaEsperaPacientes}" style="margin-top:20px; margin-bottom:20px;" emptyMessage="Nenhum paciente na fila de atendimento." rendered="#{not empty atendimentoController.listaEsperaPacientes}">  
@@ -65,24 +65,24 @@
                           </h:outputText>
                       </p:column> 
                       
+                       <p:column headerText="Paciente" >
+                          <h:outputText value="#{item.pessoa.nome}"/>
+                      </p:column>  
+                      
                        <p:column headerText="Observação" >
                           <h:outputText value="#{item.observacao}"/>
                       </p:column> 
                       
-                       <p:column headerText="Paciente" >
-                          <h:outputText value="#{item.pessoa.nome}"/>
-                      </p:column>    
-                      
-                       <p:column headerText="Expediente">
+                       <p:column headerText="Expediente" width="120">
                           <h:outputText value="#{item.expediente}"/>
                       </p:column>
                        
-                        <p:column width="160">
-                    	<b:commandButton action="#{atendimentoController.adicionarPacienteNaFilaEspera}" value="Adicionar a fila" style="margin-bottom:2px; width:140px;" look="primary">
+                        <p:column width="175">
+                    	<b:commandButton action="#{atendimentoController.adicionarPacienteNaFilaEspera}" value="Adicionar a fila" style="margin-bottom:2px; width:155px;" look="primary" iconAwesome="arrow-up">
                     	     <f:setPropertyActionListener value="#{item.pessoa}" target="#{atendimentoController.paciente}" />                    	
                     	</b:commandButton>
                     	
-                    	<b:commandButton action="#{historicoConsultaController.exibirHistoricoPaciente}" value="Mostrar Histórico" style="width:140px;">
+                    	<b:commandButton action="#{historicoConsultaController.exibirHistoricoPaciente}" value="Mostrar Histórico" style="width:155px;" iconAwesome="th-list">
                     	     <f:setPropertyActionListener value="#{item.pessoa}" target="#{historicoConsultaController.paciente}" />
                     	</b:commandButton>
                         </p:column>

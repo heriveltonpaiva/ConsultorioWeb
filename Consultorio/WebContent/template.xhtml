@@ -8,9 +8,8 @@
       xmlns:f="http://java.sun.com/jsf/core">
  
   	<h:head>
-          <title>Consultorio</title>
+          <title>Consultorio </title>
           <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />  
-
 <script type="text/javascript">
 PrimeFaces.locales['pt_BR'] = {
 	    closeText : 'Fechar',
@@ -44,29 +43,32 @@ PrimeFaces.locales['pt_BR'] = {
     </h:head>
    
     <h:body>
-<b:navBar brand="Consultorio" brandHref="#" inverse="true" >
+<b:navBar brand="Consultorio " brandHref="#" inverse="true" >
     <b:navbarLinks>
-         <b:navLink value="Inicio" outcome="/index.xhtml" iconAwesome="ui-icon-home" />
-            <b:navLink value="Realizar Consulta" outcome="/consulta/passo1.xhtml"  />
+         <b:navLink value="Inicio" outcome="/index.xhtml" iconAwesome="home" />
+            <b:navLink value="Realizar Consulta" outcome="/consulta/passo1.xhtml" iconAwesome="heart" />
+            <b:navLink value="Odontograma" outcome="/paciente/odontograma.xhtml" iconAwesome="star" />
             
-             <b:dropMenu value="Agendamento">
-             	<b:navLink value="Agendar Consulta" outcome="/agendamento/form.xhtml"/>
-                <b:navLink value="Reagendar Consulta" outcome="/agendamento/form.xhtml"/>
-                <b:navLink value="Consultar" outcome="/agendamento/list.xhtml"/>
+             <b:dropMenu value="Agendamento" >
+             	<b:navLink value="Agendar Consulta" outcome="/agendamento/form.xhtml" iconAwesome="calendar"/>
+                <b:navLink value="Reagendar Consulta" outcome="/agendamento/form.xhtml" iconAwesome="calendar"/>
+                <b:navLink value="Consultar" outcome="/agendamento/list.xhtml" iconAwesome="search"/>
              </b:dropMenu>
-            <b:navLink value="Odontograma" outcome="/paciente/odontograma.xhtml"  />
+            
             <b:dropMenu value="Cadastros">
-	            <b:navLink value="Tratamento" outcome="/tratamento/form.xhtml"/>
-	            <b:navLink value="Categoria Tratamento" outcome="/categoriaTratamento/form.xhtml"/>
-	           	<b:navLink value="Dentes" outcome="/dente/form.xhtml"/>
-	            <b:navLink value="Expedientes" outcome="/expediente/form.xhtml"/>
-	            <b:navLink value="Pacientes" outcome="/paciente/form.xhtml" />
+	            <b:navLink value="Tratamento" outcome="/tratamento/form.xhtml" iconAwesome="leaf"/>
+	            <b:navLink value="Categoria Tratamento" outcome="/categoriaTratamento/form.xhtml" iconAwesome="tags"/>
+	           	<b:navLink value="Dentes" outcome="/dente/form.xhtml" iconAwesome="tint"/>
+	            <b:navLink value="Expedientes" outcome="/expediente/form.xhtml" iconAwesome="tasks"/>
+	            <b:navLink value="Pacientes" outcome="/paciente/form.xhtml" iconAwesome="user" />
         	</b:dropMenu>
         	<b:dropMenu value="Relatórios e Finanças">
-        	    <b:navLink value="Consultas Realizadas" outcome="/financeiro/entrada_financeiro.xhtml"/>
-	            <b:navLink value="Clientes com Pendência" outcome="/financeiro/pendencias_financeiro.xhtml"/>
-	           	<b:navLink value="Saída Financeiro" outcome="/financeiro/saida_financeiro.xhtml"/>
+        	    <b:navLink value="Consultas Realizadas" outcome="/financeiro/entrada_financeiro.xhtml" iconAwesome="plus"/>
+	            <b:navLink value="Clientes com Pendência" outcome="/financeiro/pendencias_financeiro.xhtml" iconAwesome="asterisk"/>
+	           	<b:navLink value="Saída Financeiro" outcome="/financeiro/saida_financeiro.xhtml" iconAwesome="minus"/>
         	</b:dropMenu>
+        	<b:navLink value="Bem vindo, #{springUtils.currentUser}" active="false" iconAwesome="user"></b:navLink>
+        	<b:navLink value="Sair" href="j_spring_security_logout" iconAwesome="thumbs-down"></b:navLink>
     </b:navbarLinks>
 </b:navBar>
 	<b:container>
@@ -74,8 +76,6 @@ PrimeFaces.locales['pt_BR'] = {
 		<ui:insert name="corpo">Corpo original do template</ui:insert>
 		<b:well>
 		<center> Copyright© 2015. Desenvolvido por Herivelton Paiva</center>
-<!--                     Faça logout <a href="j_spring_security_logout">Clicando -->
-<!-- 				aqui</a>. -->
 		</b:well>
 	</b:container>
 
