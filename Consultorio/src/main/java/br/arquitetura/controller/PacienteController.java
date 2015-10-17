@@ -1,17 +1,14 @@
 package br.arquitetura.controller;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -26,7 +23,6 @@ import br.arquitetura.dominio.DenteArcadaDentaria;
 import br.arquitetura.dominio.Endereco;
 import br.arquitetura.dominio.Estado;
 import br.arquitetura.dominio.Medicacao;
-import br.arquitetura.dominio.PacienteAtendimento;
 import br.arquitetura.dominio.Pessoa;
 import br.arquitetura.dominio.TipoAcarda;
 import br.arquitetura.dominio.TipoPessoa;

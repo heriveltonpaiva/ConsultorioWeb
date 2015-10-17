@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,10 +16,6 @@ public class Dente implements Serializable{
 	private int numero;
 	private String localizacao;
 	
-	@ManyToOne
-	@JoinColumn(name="id_arquivo", referencedColumnName="id")
-	private Arquivo arquivo;
-
 	public int getId() {
 		return id;
 	}
@@ -46,13 +40,5 @@ public class Dente implements Serializable{
 		this.localizacao = localizacao;
 	}
 
-	public Arquivo getArquivo() {
-		return arquivo;
-	}
-
-	public void setArquivo(Arquivo arquivo) {
-		this.arquivo = arquivo;
-	}
-	
 	
 }

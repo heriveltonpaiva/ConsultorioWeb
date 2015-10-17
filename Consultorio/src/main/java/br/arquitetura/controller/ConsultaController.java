@@ -90,9 +90,8 @@ public class ConsultaController {
 		consulta.getConsultaGeral().setAgendamento(agendamentoDaConsulta);
 		consulta.getConsultaGeral().setDataConsulta(new Date());
 		consulta.getConsultaGeral().setNumeroProtocolo(getNumeroConsultaGeral());
-		
-		//consulta.getConsultaGeral().setTempoAtendimento();
 		consulta.getConsultaGeral().setValorTotal(valorTotalConsulta);
+		consulta.getConsultaGeral().setValorPago(valorTotalConsulta);
 		
 		return PaginasUtil.CONSULTA_PASSO_3;
 	}
@@ -117,10 +116,10 @@ public class ConsultaController {
 		int numeroDente = Integer.parseInt(getidDenteParam(fc));
 		DenteArcadaDentaria dente = null;
 		for (DenteArcadaDentaria d : listagemDentesPaciente){		
-			//if(d.getNumero()==idDente){
+			if(d.getDente().getNumero()==numeroDente){
 				dente = d;
 				break;
-			//}
+			}
 				
 		}
 		consulta.setTratamento(tratamentoService.listarPorId("Tratamento", consulta.getTratamento().getId()));	    

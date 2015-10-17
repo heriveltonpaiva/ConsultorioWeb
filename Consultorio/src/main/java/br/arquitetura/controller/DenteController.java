@@ -1,19 +1,15 @@
 package br.arquitetura.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.arquitetura.dominio.Arquivo;
 import br.arquitetura.dominio.Dente;
 import br.arquitetura.service.DenteServiceImpl;
 
@@ -31,16 +27,6 @@ public class DenteController {
 		listagem = denteService.listarTodos("Dente");
 
 		dente = new Dente();
-		dente.setArquivo(new Arquivo());
-	}
-	
-	public void uploadListener(FileUploadEvent evento) throws IOException{
-		UploadedFile arq = evento.getFile();
-		dente.getArquivo().setDescricao(arq.getFileName());
-		dente.getArquivo().setContentType(arq.getContentType());
-		dente.getArquivo().setTamanho(arq.getSize());
-		dente.getArquivo().setConteudo(arq.getContents());
-		
 	}
 	
 	@Transactional
@@ -48,7 +34,6 @@ public class DenteController {
 		  try {
 				denteService.cadastrar(dente);
 				exibirMensagemSucesso("Inserido");
-				//carregarListagem();
 		  	}catch(Exception e){
 		  		exibirMensagemErro(e);
 		  	}

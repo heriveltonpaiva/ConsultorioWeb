@@ -48,8 +48,37 @@
 							
 
 	                  </h:panelGrid>
-                  	<b:commandButton action="#{consultaController.iniciarPasso2}" value="Voltar" style="margin-bottom:20px; margin-top:10px;margin-right:2px; width:150px;"/>	       
-                    <b:commandButton action="#{consultaController.finalizarConsulta}" value="Finalizar" style="margin-bottom:20px; margin-top:10px;width:150px;"/>
+	                  
+	                                   	 <p:dataTable id="tabela" var="item" value="#{consultaController.listaConsultaOperacoes}" style="margin-top:10px;" rendered="#{not empty consultaController.listaConsultaOperacoes}">    
+                 	 <f:facet name="header">
+                 	      <h:outputLabel value="Procedimentos" />
+                 	 </f:facet>
+                 	 <p:column headerText="N°" width="50">
+                          <h:outputText value="#{item.numero}"/>
+                      </p:column>   
+                      <p:column headerText="Valor" width="100">
+                          <h:outputText value="#{item.valor}">
+                            <f:convertNumber type="currency" currencySymbol="R$" />
+                          </h:outputText>
+                      </p:column> 
+                      <p:column headerText="Tratamento" >
+                          <h:outputText value="#{item.tratamento.descricao}"/>
+                      </p:column>            
+                      <p:column headerText="Dente" width="100">
+                        <h:outputText value="#{item.denteArcadaDentaria}"/>
+                      </p:column>
+                       <p:column headerText="Observações" >
+                         <h:outputText value="#{item.observacao}" />
+                      </p:column>
+                       <p:column width="50">
+                            <p:commandButton icon="ui-icon-search" actionListener="#{consultaController}" />
+                        </p:column>
+                       
+                      </p:dataTable>
+	                  
+	                  
+                  	<b:commandButton iconAwesome="arrow-left" action="#{consultaController.iniciarPasso2}" value="Voltar" style="margin-bottom:20px; margin-top:10px;margin-right:2px; width:150px;"/>	       
+                    <b:commandButton iconAwesome="thumbs-up" action="#{consultaController.finalizarConsulta}" value="Finalizar" style="margin-bottom:20px; margin-top:10px;width:150px;" look="primary"/>
                     
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />     
             </h:form>

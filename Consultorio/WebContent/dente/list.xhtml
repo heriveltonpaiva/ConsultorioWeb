@@ -25,18 +25,14 @@
                       <p:column headerText="Localização" >
                           <h:outputText value="#{item.localizacao}"/>
                       </p:column> 
-                        
-                      <p:column headerText="Arquivo" width="100">
-                          <h:outputText value="#{item.arquivo.id}"/>
-                      </p:column> 
-                                           
+                                    
                       <p:column  width="50">
-                          <p:commandButton action="#{denteController.editar}" icon="ui-icon-pencil" >
+                          <p:commandButton action="#{denteController.editar}" icon="ui-icon-pencil" disabled="true">
                                 <f:setPropertyActionListener target="#{denteController.dente}" value="#{item}"  />             
                           </p:commandButton>
 
-                          <p:commandButton  action="#{denteController.remover}" icon="ui-icon-close" update="tabela"   disabled="true">
-                                                          <f:setPropertyActionListener target="#{denteController.dente}" value="#{item}"  />             
+                          <p:commandButton  action="#{denteController.remover}" icon="ui-icon-close" update="tabela"  disabled="true">
+                                   <f:setPropertyActionListener target="#{denteController.dente}" value="#{item}"  />             
                           </p:commandButton>
 
                         </p:column>

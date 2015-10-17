@@ -7,24 +7,23 @@
 
      <ui:composition template="/template.xhtml">
         <ui:define name="corpo">
-            <h:form id="form" enctype="multipart/form-data">
+            <h:form id="form">
                 <h2>Cadastro de Dente</h2>
 
                 <h:panelGrid columns="2" style="margin-bottom:20px;">
                     <b:button value="Cadastrar" icon="ui-icon-plusthick" disabled="true" style="margin-right:2px; width:150px;"/>
                     <b:commandButton value="Listar" icon="ui-icon-calculator" action="#{denteController.carregarListagem}" style="width:150px;"/>
                 </h:panelGrid>   
+                    <h:panelGrid columns="2">
+					<p:outputLabel value="Número" />
+					<p:outputLabel value="Localização Bucal" style="margin-left:10px;"/>
+					
+					<b:inputText value="#{denteController.dente.numero}"/>
+					<b:inputText value="#{denteController.dente.localizacao}" style="margin-left:10px;" />
+	                 
+	                 </h:panelGrid>
 
-					<p:outputLabel value="N° do Dente" />
-					<b:inputText value="#{denteController.dente.numero}" />
-
-					<p:outputLabel value="Localização Bucal" />
-					<b:inputText value="#{denteController.dente.localizacao}" />
-
-					<p:fileUpload  id="fileAnexo" fileUploadListener="#{denteController.uploadListener}" mode="advanced" sizeLimit="1000000"
-                         allowTypes="/(\.|\/)(doc|docx|xls|xlsx|pdf|jpg)$/" auto="false" invalidFileMessage="Formato de arquivo invalido"/>
-                        
-                    <b:commandButton action="#{denteController.salvar}" value="Cadastrar Dente" style="margin-bottom:20px; margin-top:20px; width:200px;"/>
+                    <b:commandButton action="#{denteController.salvar}" value="Cadastrar Dente" style="margin-bottom:20px; margin-top:20px; width:200px;" look="primary"/>
                         
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />     
             </h:form>
