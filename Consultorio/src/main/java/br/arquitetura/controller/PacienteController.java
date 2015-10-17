@@ -59,6 +59,11 @@ public class PacienteController {
 		denteService = new DenteServiceImpl();
 		arcadaDentariaService = new ArcadaDentariaServiceImpl();
 		denteArcadaDentariaService = new DenteArcadaDentariaServiceImpl();
+		reset();
+	}
+	
+	public void reset(){
+		
 		medicacao = new Medicacao();
 		
 		listaMedicacoes = new ArrayList<Medicacao>();
@@ -92,7 +97,8 @@ public class PacienteController {
 		        salvarMedicacaoPaciente();
 		        
 				exibirMensagemSucesso("Inserido");
-				//carregarListagem();
+				reset();
+				carregarListagem();
 		  	}catch(Exception e){
 		  		exibirMensagemErro(e);
 		  	}
@@ -233,19 +239,20 @@ public class PacienteController {
 	}
 	
 	public void carregarFotosPacientes(){
-		try {
-			for (Pessoa pessoa : listagem) {
-				if(pessoa.getArquivo()!=null){
-				String content[] = pessoa.getArquivo().getContentType().split("/");			
-				String nomeArquivo = pessoa.getArquivo().getId() + "."+content[1];
-				String arquivo = "C:\\Users\\Herivelton\\workspace_eclipse_mars\\Consultorio\\WebContent\\resourcers\\images\\" + File.separator + nomeArquivo;
-
-				criarArquivo(pessoa.getArquivo().getConteudo(), arquivo);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			for (Pessoa pessoa : listagem) {
+//				if (pessoa.getArquivo() != null) {
+//					String content[] = pessoa.getArquivo().getContentType().split("/");
+//					String nomeArquivo = pessoa.getArquivo().getId() + "." + content[1];
+//					String arquivo = "C:\\Users\\Herivelton\\workspace_eclipse_mars\\Consultorio\\WebContent\\resourcers\\images\\"
+//							+ File.separator + nomeArquivo;
+//
+//					criarArquivo(pessoa.getArquivo().getConteudo(), arquivo);
+//				}
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		
 	}
 

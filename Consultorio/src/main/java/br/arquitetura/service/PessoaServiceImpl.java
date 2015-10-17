@@ -24,11 +24,13 @@ public class PessoaServiceImpl extends GenericServiceImpl<Pessoa> implements Pes
 	        
 			PessoaDao dao = new PessoaDao();
 			
-			if(obj.getArquivo().getDescricao()!=null){
-		        obj.getArquivo().setId(nextSequence(SEQUENCE_ARQUIVO));
-		        dao.salvarArquivoPessoa(obj.getArquivo());
-			}else{
-				obj.setArquivo(null);
+			if(obj.getArquivo()!=null){
+				if(obj.getArquivo().getDescricao()!=null){
+			        obj.getArquivo().setId(nextSequence(SEQUENCE_ARQUIVO));
+			        dao.salvarArquivoPessoa(obj.getArquivo());
+				}else{
+					obj.setArquivo(null);
+				}
 			}
 			if(obj.getEndereco()!=null){
 		        obj.getEndereco().setId(nextSequence(SEQUENCE_ENDERECO));
