@@ -104,7 +104,6 @@ public class ConsultaController {
 			return PaginasUtil.CONSULTA_PASSO_3;
 		}
 		
-		
 		double valorTotalConsulta = 0.0;
 		//Pacientes que não passaram pela realização de procedimentos
 		if(!listaConsultaOperacoes.isEmpty()){
@@ -125,17 +124,70 @@ public class ConsultaController {
 	}
 	
 	@Transactional
-	public String finalizarConsulta(){
-		
-		//Pacientes avulsos que não realizam procedimentos //
-		if(pacienteDaConsulta.getId() == 0){
-            pessoaService.salvarPacienteAvulso(pacienteAvulso);            
-    		pacienteAvulso = new PacienteAtendimento();
-    		resetConsulta();
-    		exibirMensagemSucesso("finalizada");
-            return PaginasUtil.PAGINA_INICIAL;
+	public String finalizarConsulta() {
+
+		if (pacienteDaConsulta.getId() == 0) {
+			return cadastrarPacientesAvulsos();
+		}
+
+		cadastrarAvulsosAposProcedimento();
+		consultaGeralService.cadastrar(consulta.getConsultaGeral());
+
+		if (!listaConsultaOperacoes.isEmpty()) {
+			registrarConsultaPacientesAposProcedimento();
+
+		} else {
+			registrarConsultaPaciente();
+		}
+
+		pacienteDaConsulta = new Pessoa();
+		listagemDentesPaciente = new ArrayList<DenteArcadaDentaria>();
+		listaConsultaOperacoes = new ArrayList<Consulta>();
+		resetConsulta();
+
+		exibirMensagemSucesso("finalizada");
+		return PaginasUtil.PAGINA_INICIAL;
+	}
+
+
+    /**
+     * Salva a consulta do paciente que finalizou a consulta de forma direta, sem passar pela
+     * realização de procedimentos.
+     */
+	private void registrarConsultaPaciente() {
+		//Para finalização de consulta sem procedimento.
+		 consulta.setValor(consulta.getConsultaGeral().getValorTotal());
+		 consulta.setNumero(getNumeroProcedimento());
+		 consulta.setTratamento(null);
+		 consulta.setPessoa(pacienteDaConsulta);
+		 consulta.setDenteArcadaDentaria(null);
+		 
+		 consultaService.cadastrar(consulta);
+		 cadastrarAtendimentoPaciente();
+	}
+
+
+	/**
+	 * salva a consulta dos paciente que estão cadastrandos na base de pacientes após
+	 * realização de um procedimento.
+	 */
+	private void registrarConsultaPacientesAposProcedimento() {
+		for (Consulta consulta : listaConsultaOperacoes) {
+			    consulta.setConsultaGeral(new ConsultaGeral());
+			    consulta.setConsultaGeral(this.consulta.getConsultaGeral());
+			    consulta.setPessoa(pacienteDaConsulta);
+			    consultaService.cadastrar(consulta);	
 		}
 		
+		 cadastrarAtendimentoPaciente();
+	}
+
+
+   /**
+    * Faz o cadastro dos pacientes avulsos após a realização do procedimento, a partir da finalização da consulta
+    * esse paciente vai pertencer a tabela de pacientes.
+    */
+	private void cadastrarAvulsosAposProcedimento() {
 		//Para pacientes cadastrados no momento da consulta (PACIENTES AVULSOS).
 		Pessoa pacienteExiste = pessoaService.listarPorId("Pessoa", pacienteDaConsulta.getId());
 		if(pacienteExiste == null){
@@ -143,42 +195,35 @@ public class ConsultaController {
 			pessoaService.salvarPacientePreAtendimento(pacienteDaConsulta);
 			arcadaDentariaService.salvarArcadaPreAtendimento(listagemDentesPaciente.get(0).getArcadaDentaria());
 			denteArcadaDentariaService.salvarDentesPreAtendimento(listagemDentesPaciente);
+			
+		    cadastrarAtendimentoPaciente();
 		}
-		
-		 consultaGeralService.cadastrar(consulta.getConsultaGeral());
-		 
-		 
-		 // Para pacientes cadastrados na base de dados - tradicional
-		 if(!listaConsultaOperacoes.isEmpty()){
-				for (Consulta consulta : listaConsultaOperacoes) {
-					    consulta.setConsultaGeral(new ConsultaGeral());
-					    consulta.setConsultaGeral(this.consulta.getConsultaGeral());
-					    consulta.setPessoa(pacienteDaConsulta);
-
-					    consultaService.cadastrar(consulta);			
-				}
-		 }else{
-			 
-			 //Para finalização de consulta sem procedimento.
-			 consulta.setValor(consulta.getConsultaGeral().getValorTotal());
-			 consulta.setNumero(getNumeroProcedimento());
-			 consulta.setTratamento(null);
-			 consulta.setPessoa(pacienteDaConsulta);
-			 consulta.setDenteArcadaDentaria(null);
-			 
-			 consultaService.cadastrar(consulta);
-		 }
-		 
-		 
-		pacienteDaConsulta = new Pessoa();
-		listagemDentesPaciente = new ArrayList<DenteArcadaDentaria>();
-		listaConsultaOperacoes = new ArrayList<Consulta>();
+	}
+    
+	/**
+	 * Cadastra os pacientes que não serão salvos na tabela de pacientes. e sim na tabela de
+	 * pacienteAtendimento, os mesmos não possui prontuário e não realizaram nenhum procedimento.
+	 * @return
+	 */
+	private String cadastrarPacientesAvulsos() {
+		pacienteAvulso.setAtendido(true);
+		pessoaService.salvarPacienteAtendimento(pacienteAvulso);            
+		pacienteAvulso = new PacienteAtendimento();
 		resetConsulta();
-		
 		exibirMensagemSucesso("finalizada");
 		return PaginasUtil.PAGINA_INICIAL;
 	}
 
+	/**
+	 * Cadastra o atendimento do paciente, seja ele avulso, após procedimento ou de forma direta.
+	 */
+	private void cadastrarAtendimentoPaciente() {
+		PacienteAtendimento atendimento = pacienteDaConsulta.getAtendimento();
+		 atendimento.setPaciente(pacienteDaConsulta);
+		 atendimento.setAtendido(true);
+		 pessoaService.salvarPacienteAtendimento(atendimento);
+	}
+	
 	/**
 	 * Adiciona um procedimento a listagem de operações, após clicar no dente no passo 2
 	 */

@@ -66,7 +66,7 @@ public class PessoaServiceImpl extends GenericServiceImpl<Pessoa> implements Pes
 			return dao.findMedicacaoByPaciente(paciente);
 		}
 		
-		public void salvarPacienteAvulso(PacienteAtendimento paciente){
+		public void salvarPacienteAtendimento(PacienteAtendimento paciente){
 			GenericDaoImpl genericDao = new GenericDaoImpl();
 			paciente.setId(nextSequence(SEQUENCE_PACIENTE_AVULSO));
 			genericDao.cadastrar(paciente);

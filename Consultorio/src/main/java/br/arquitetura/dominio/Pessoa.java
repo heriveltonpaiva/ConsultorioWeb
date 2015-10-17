@@ -78,6 +78,9 @@ public class Pessoa implements Serializable{
 	@Transient
 	private Date horarioChegada;
 	
+	@Transient
+	private PacienteAtendimento atendimento;
+	
 	public int getId() {
 		return id;
 	}
@@ -297,6 +300,33 @@ public class Pessoa implements Serializable{
 	}
 	public void setHorarioChegada(Date horarioChegada) {
 		this.horarioChegada = horarioChegada;
+	}
+	
+	
+	public PacienteAtendimento getAtendimento() {
+		return atendimento;
+	}
+	public void setAtendimento(PacienteAtendimento atendimento) {
+		this.atendimento = atendimento;
+	}
+	
+	public String getStatusAtendimento(){
+		if(!atendimento.isAtendido() && !atendimento.isDesistencia()){
+			return "Em espera";
+		}
+		if(atendimento.isAtendido()){
+			return "Atendido";
+		}else if(atendimento.isDesistencia()){
+			return "Desistência";
+		}
+		return "";
+	}
+	
+	public boolean isHabilitarOperacoes(){
+		if(!atendimento.isAtendido() && !atendimento.isDesistencia()){
+			return true;
+		}
+		return false;
 	}
 	
 }

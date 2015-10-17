@@ -9,14 +9,17 @@
         <ui:define name="corpo">
             <h2>Iniciar Consulta Odontológica</h2>
 
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />    
+
             	<h:form id="formAutoComplete">
 
  					<p:dataTable id="tabelaFilaeEspera" var="paciente" value="#{atendimentoController.listaEsperaPacientes}" style="margin-top:20px; margin-bottom:20px;" emptyMessage="Nenhum paciente na fila de atendimento." rendered="#{not empty atendimentoController.listaEsperaPacientes}">  
-	                   <f:facet name="header">
-							Lista de Espera para Atendimento 
-						</f:facet>
-	                	<p:column headerText="Ordem" width="70">
-                          <h:outputText value="#{paciente.ordemChegada}°"/>
+
+	                <f:facet name="header">
+						Lista de Espera para Atendimento 
+					</f:facet>
+                	<p:column headerText="Ordem" width="70">
+                          <h:outputText value="#{paciente.atendimento.ordemChegada}°"/>
                       </p:column> 
                      <p:column headerText="Paciente" >
                           <h:outputText value="#{paciente.nome}"/>
@@ -24,22 +27,27 @@
                      <p:column headerText="Observação" >
                           <h:outputText value="#{paciente.observacao}"/>
                      </p:column> 
-                     <p:column headerText="Horário Chegada" >
-                          <h:outputText value="#{paciente.horarioChegada}">
+                     <p:column headerText="Horário" width="100">
+                          <h:outputText value="#{paciente.atendimento.dataHorario}">
                               <f:convertDateTime pattern="HH:mm" timeZone="GMT-03:00"/>  
                           </h:outputText>
                      </p:column> 
-                      <p:column headerText="Avulso" width="90" >
-                          <h:outputText value="SIM" rendered="#{!paciente.ativo}"/>
-                          <h:outputText value="NÃO" rendered="#{paciente.ativo}"/>
+                      <p:column headerText="Avulso" width="100" >
+                          <h:outputText value="Sim" rendered="#{!paciente.ativo}"/>
+                          <h:outputText value="Não" rendered="#{paciente.ativo}"/>
+                     </p:column>  
+                      <p:column headerText="Status" width="100" >
+                          <h:outputText value="#{paciente.statusAtendimento}" rendered="#{paciente.statusAtendimento eq 'Atendido'}" style="color:blue;"/>
+                          <h:outputText value="#{paciente.statusAtendimento}" rendered="#{paciente.statusAtendimento eq 'Em espera'}" style="color:green;"/>
+                          <h:outputText value="#{paciente.statusAtendimento}" rendered="#{paciente.statusAtendimento eq 'Desistência'}" style="color:red;"/>
                      </p:column>  
 	                     
 	                      <p:column width="160">
-                    	<b:commandButton action="#{consultaController.iniciarPasso2}" value="Iniciar Procedimento" style="margin-bottom:2px; width:140px;" look="primary">
+                    	<b:commandButton action="#{consultaController.iniciarPasso2}" value="Iniciar Procedimento" style="margin-bottom:2px; width:140px;" look="primary" rendered="#{paciente.habilitarOperacoes}">
                     	     <f:setPropertyActionListener value="#{paciente}" target="#{consultaController.pacienteDaConsulta}" />                    	
                     	</b:commandButton>
                     	
-                    	<b:commandButton action="#{consultaController.iniciarPasso3}" value="Finalizar Atendimento" style="margin-bottom:2px; width:140px;" look="success">
+                    	<b:commandButton action="#{consultaController.iniciarPasso3}" value="Finalizar Atendimento" style="margin-bottom:2px; width:140px;" look="success" rendered="#{paciente.habilitarOperacoes}">
                     	     <f:setPropertyActionListener value="#{paciente}" target="#{consultaController.pacienteDaConsulta}" />
                     	     <f:setPropertyActionListener value="#{paciente.ordemChegada}" target="#{consultaController.pacienteAvulso.ordemChegada}" />
                     	</b:commandButton>
@@ -59,7 +67,7 @@
                   <p:ajax event="itemSelect" listener="#{consultaController.carregaPaciente}" update="formAutoComplete, tabela"  />                   
                   </p:autoComplete>
                  
-                  <b:commandButton action="#{atendimentoController.adicionarPacienteNaFilaEspera}" value="Adicionar a fila" style="width:140px;margin-left:10px;" look="primary"/>
+                  <b:commandButton action="#{atendimentoController.adicionarPacienteNaFilaEspera}" value="Adicionar a fila" style="width:140px;margin-left:10px;" look="primary" iconAwesome="plus"/>
                   
                  
                     <p:panelGrid rendered="#{ not empty consultaController.consulta.pessoa.nome}" columns="4" style="margin-top:10px;">
@@ -109,7 +117,6 @@
                           <h:outputText value="#{item.denteArcadaDentaria}"/>
                       </p:column>          
                   </p:dataTable>
-                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />    
                  
             </h:form>
             

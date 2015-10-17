@@ -16,5 +16,5 @@ public interface PessoaService {
 	
 	public List<Medicacao> findMedicacaoByPaciente(Pessoa paciente);
 	
-	public void salvarPacienteAvulso(PacienteAtendimento paciente);
+	public void salvarPacienteAtendimento(PacienteAtendimento paciente);
 }
