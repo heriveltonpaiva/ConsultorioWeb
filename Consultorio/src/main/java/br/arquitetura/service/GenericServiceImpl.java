@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.arquitetura.dao.GenericDaoImpl;
-import br.arquitetura.dominio.Arquivo;
 
 @Service
 public class GenericServiceImpl<T> implements GenericService<T>{
@@ -15,7 +14,7 @@ public class GenericServiceImpl<T> implements GenericService<T>{
 	
 	public void cadastrar(T obj) {
 		    dao = new GenericDaoImpl();
-			dao.cadastrar(obj);
+		    dao.cadastrar(obj);	
 	}
 
 	public void alterar(T obj) {

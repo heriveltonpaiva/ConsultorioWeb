@@ -9,4 +9,9 @@ public interface DenteArcadaDentariaService {
 
 	public List<DenteArcadaDentaria> findByPaciente(Pessoa paciente);
 	
+	public List<DenteArcadaDentaria> getListaDentes();
+	
+	public void setListaDentes(List<DenteArcadaDentaria> listaDentes);
+	
+	public void salvarDentesPreAtendimento(List<DenteArcadaDentaria> dentes);
 }

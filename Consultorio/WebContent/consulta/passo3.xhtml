@@ -9,7 +9,28 @@
         <ui:define name="corpo">
             <h:form id="form" >
                 <h2>Finalizar Consulta</h2>
-                        
+                    
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />     
+                    
+                    <h:panelGroup rendered="#{consultaController.pacienteDaConsulta.id == 0}">
+                     <h:panelGrid columns="2">
+                     	
+                     	<p:outputLabel value="Ordem N°"/>
+                     	<p:outputLabel value="Paciente" style="margin-left:10px;"/>
+	                       
+	                       <b:inputText value="#{consultaController.pacienteAvulso.ordemChegada}" disabled="true" size="50" style="width:100px;"/> 
+	                       <b:inputText value="#{consultaController.pacienteAvulso.nomePaciente}" disabled="true" size="50" style="margin-left:10px;" /> 
+	                    </h:panelGrid>  
+                     	<h:panelGrid columns="1">
+	                     	<p:outputLabel value="Observações"/>
+	                    	<p:inputTextarea value="#{consultaController.pacienteAvulso.observacao}" disabled="false"  cols="83" rows="5"/>
+                    	 </h:panelGrid>
+                    
+                    <b:commandButton iconAwesome="arrow-left" action="#{consultaController.iniciarPasso1}" value="Voltar" style="margin-bottom:20px; margin-top:10px;margin-right:2px; width:150px;"/>	       
+                    
+                    </h:panelGroup>
+                    
+                    <h:panelGroup rendered="#{consultaController.pacienteDaConsulta.id > 0}">    
 	                    <h:panelGrid columns="3">
 	                        <p:outputLabel value="Número"/>
 	                        <p:outputLabel value="Paciente:"/>
@@ -75,12 +96,12 @@
                         </p:column>
                        
                       </p:dataTable>
+	                <b:commandButton iconAwesome="arrow-left" action="#{consultaController.iniciarPasso2}" value="Voltar" style="margin-bottom:20px; margin-top:10px;margin-right:2px; width:150px;"/>	       
+	                
+	                </h:panelGroup>  
 	                  
-	                  
-                  	<b:commandButton iconAwesome="arrow-left" action="#{consultaController.iniciarPasso2}" value="Voltar" style="margin-bottom:20px; margin-top:10px;margin-right:2px; width:150px;"/>	       
                     <b:commandButton iconAwesome="thumbs-up" action="#{consultaController.finalizarConsulta}" value="Finalizar" style="margin-bottom:20px; margin-top:10px;width:150px;" look="primary"/>
                     
-                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />     
             </h:form>
         </ui:define>
     </ui:composition>

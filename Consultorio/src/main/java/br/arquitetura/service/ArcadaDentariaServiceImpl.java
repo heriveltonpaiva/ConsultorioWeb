@@ -1,5 +1,6 @@
 package br.arquitetura.service;
 
+import br.arquitetura.dao.GenericDaoImpl;
 import br.arquitetura.dominio.ArcadaDentaria;
 
 public class ArcadaDentariaServiceImpl extends GenericServiceImpl<ArcadaDentaria> implements ArcadaDentariaService {
@@ -10,5 +11,9 @@ public class ArcadaDentariaServiceImpl extends GenericServiceImpl<ArcadaDentaria
 	        obj.setId(nextSequence(SEQUENCE));
 	        super.cadastrar(obj);
 		}
-	
+
+		public void salvarArcadaPreAtendimento(ArcadaDentaria arcada){
+			GenericDaoImpl genericDao = new GenericDaoImpl();
+			genericDao.cadastrar(arcada);
+		}
 }

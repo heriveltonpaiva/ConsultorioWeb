@@ -41,6 +41,7 @@
                     	
                     	<b:commandButton action="#{consultaController.iniciarPasso3}" value="Finalizar Atendimento" style="margin-bottom:2px; width:140px;" look="success">
                     	     <f:setPropertyActionListener value="#{paciente}" target="#{consultaController.pacienteDaConsulta}" />
+                    	     <f:setPropertyActionListener value="#{paciente.ordemChegada}" target="#{consultaController.pacienteAvulso.ordemChegada}" />
                     	</b:commandButton>
                     	
                     	<b:commandButton action="#{historicoConsultaController.exibirHistoricoPaciente}" value="Exibir Histórico" style="width:140px;">
