@@ -20,7 +20,13 @@ import br.arquitetura.controller.SpringUtils;
 public class GenericDaoImpl implements GenericDao<Object>, Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private SessionFactory sessionFactory = (SessionFactory) SpringUtils.ctx.getBean("sessionFactory");
+	private SessionFactory sessionFactory = null;
+	
+	public GenericDaoImpl() {
+		if(sessionFactory == null){
+			sessionFactory = (SessionFactory) SpringUtils.ctx.getBean("sessionFactory");
+		}
+	}
 	
 	public void cadastrar(Object obj) {
 		try{

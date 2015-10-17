@@ -22,15 +22,25 @@ public class ErrorHandler {
 	}
 
 	public String getExceptionType(){
-		String val = FacesContext.getCurrentInstance().getExternalContext().
-			getRequestMap().get("javax.servlet.error.exception_type").toString();
-		return val;
+		if (FacesContext.getCurrentInstance().getExternalContext().getRequestMap()
+				.get("javax.servlet.error.exception_type") != null) {
+			String val = FacesContext.getCurrentInstance().getExternalContext().getRequestMap()
+					.get("javax.servlet.error.exception_type").toString();
+			return val;
+		} else {
+			return "";
+		}
 	}
 
 	public String getException(){
-		String val =  (String)((Exception)FacesContext.getCurrentInstance().getExternalContext().
-			getRequestMap().get("javax.servlet.error.exception")).toString();
-		return val;
+		if (FacesContext.getCurrentInstance().getExternalContext().getRequestMap()
+				.get("javax.servlet.error.exception") != null) {
+			String val = (String) ((Exception) FacesContext.getCurrentInstance().getExternalContext().getRequestMap()
+					.get("javax.servlet.error.exception")).toString();
+			return val;
+		} else {
+			return "";
+		}
 	}
 
 	public String getRequestURI(){

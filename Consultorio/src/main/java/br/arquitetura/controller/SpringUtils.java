@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SpringUtils {
-
-    public static ApplicationContext ctx;
     
+    public static ApplicationContext ctx;
+    private String currentUser;
     /**
      * Make Spring inject the application context
      * and save it on a static variable,
@@ -23,10 +23,18 @@ public class SpringUtils {
     }
     
     public String getCurrentUser() {
+    	if(SecurityContextHolder.getContext().getAuthentication()==null){
+    		return "";
+    	}else{
     	  Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    			    if (principal instanceof User) 
-    			    	return ((User) principal).getUsername();
-    			    return "";
+    			    if (principal instanceof User){ 
+    			    	currentUser = ((User) principal).getUsername();
+    			    }
+    	}
+    	return "";
 	}
     
+    public void setCurrentUser(String currentUser) {
+		this.currentUser = currentUser;
+	}
 }
