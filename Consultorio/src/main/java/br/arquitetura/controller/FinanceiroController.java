@@ -2,6 +2,7 @@ package br.arquitetura.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
+
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -31,7 +33,11 @@ public class FinanceiroController {
 	private List<EntradaFinanceiro> listaEntradaFinanceiro;
     private UploadedFile file;
     private StreamedContent fileDownload;
-
+    private double totalValor;
+    private double totalSaida;
+    private double totalValorPago;
+    private double totalPendencia; 
+    
     private Date dataInicio;
     private Date dataFinal;
     
@@ -42,6 +48,9 @@ public class FinanceiroController {
 	  consultaGeralService = new ConsultaGeralServiceImpl();
 	  carregarListaEntrada();
 	  carregarListaSaida();
+	  getListaEntradaFinanceiro();
+	  getListaSaidaFinanceiro();
+	  
 	}
 	
 	@Transactional
@@ -51,6 +60,7 @@ public class FinanceiroController {
 	   	consultaGeralService.cadastrarSaidaFinanceiro(saidaFinanceiro);
 	    exibirMensagemSucesso("Inserido");
 	    carregarListaSaida();
+	    getListaSaidaFinanceiro();
 	    saidaFinanceiro = new SaidaFinanceiro();
 	    
 		return PaginasUtil.SAIDA_FINANCEIRO;
@@ -58,10 +68,12 @@ public class FinanceiroController {
 	
 	public void carregarListaEntrada(){
 		listaEntradaFinanceiro = consultaGeralService.findAllEntradaFinanceiro(dataInicio, dataFinal);
+		getListaEntradaFinanceiro();
 	}
 	
 	public void carregarListaSaida(){
 		listaSaidaFinanceiro = consultaGeralService.findAllSaidaFinanceiro(null, null);
+		getListaSaidaFinanceiro();
 	}
 	
 	public void salvarArquivo() throws IOException{
@@ -87,15 +99,31 @@ public class FinanceiroController {
 		this.saidaFinanceiro = saidaFinanceiro;
 	}
 	public List<SaidaFinanceiro> getListaSaidaFinanceiro() {
+		totalSaida = 0;
+		for (SaidaFinanceiro saida : listaSaidaFinanceiro) {
+		  totalSaida += saida.getValor();
+		}
 		return listaSaidaFinanceiro;
 	}
 	public void setListaSaidaFinanceiro(List<SaidaFinanceiro> listaSaidaFinanceiro) {
 		this.listaSaidaFinanceiro = listaSaidaFinanceiro;
 	}
 	public List<EntradaFinanceiro> getListaEntradaFinanceiro() {
+		    totalValor = 0;
+		    totalValorPago = 0;
+		for (EntradaFinanceiro entrada : listaEntradaFinanceiro) {
+			totalValor += entrada.getValorTotal();
+			totalValorPago += entrada.getValorPago();
+		}
 		return listaEntradaFinanceiro;
 	}
 	public void setListaEntradaFinanceiro(List<EntradaFinanceiro> listaEntradaFinanceiro) {
+		totalValor = 0;
+		totalValorPago = 0;
+		for (EntradaFinanceiro entrada : listaEntradaFinanceiro) {
+			totalValor += entrada.getValorTotal();
+			totalValorPago += entrada.getValorPago();
+		}
 		this.listaEntradaFinanceiro = listaEntradaFinanceiro;
 	}
 	public UploadedFile getFile() {
@@ -128,4 +156,18 @@ public class FinanceiroController {
 	public void setDataFinal(Date dataFinal) {
 		this.dataFinal = dataFinal;
 	}
+	public String getTotalValor() {
+		return NumberFormat.getCurrencyInstance().format(totalValor);
+	}
+	public String getTotalValorPago() {
+		return NumberFormat.getCurrencyInstance().format(totalValorPago);
+	}
+	public String getTotalPendencia() {
+		totalPendencia = totalValor - totalValorPago;
+		 return NumberFormat.getCurrencyInstance().format(totalPendencia);
+	}
+	public String getTotalSaida() {
+		return NumberFormat.getCurrencyInstance().format(totalSaida);
+	}
+
 }

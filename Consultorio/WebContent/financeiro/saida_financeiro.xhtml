@@ -32,7 +32,7 @@
                       <p:column headerText="Descrição" >
                           <h:outputText value="#{item.descricao}"/>
                       </p:column> 
-                       <p:column headerText="Valor" width="100">
+                       <p:column headerText="Valor" width="120">
                           <h:outputText value="#{item.valor}">
                              <f:convertNumber type="currency" currencySymbol="R$" />
                           </h:outputText>
@@ -47,7 +47,14 @@
     						 <p:fileDownload value="#{saidaFinanceiroController.fileDownload}" />      						 
 						  </p:commandButton>  
                       </p:column>
-                      
+                      <p:columnGroup type="footer">
+				            <p:row>
+				                <p:column colspan="1" style="text-align:right;" footerText="Total:"/>
+				                <p:column footerText="#{financeiroController.totalSaida}" />
+				                <p:column footerText="" />
+				                <p:column footerText="" />
+				            </p:row>
+				        </p:columnGroup>
                       <f:facet name="footer">
         					 <h:outputText value="#{fn:length(financeiroController.listaSaidaFinanceiro)} Registros Encontrados"/>
     				  </f:facet>

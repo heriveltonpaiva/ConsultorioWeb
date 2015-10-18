@@ -36,12 +36,12 @@
                           	<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/> 
                           </h:outputText>
                       </p:column> 
-                      <p:column headerText="Valor" width="100">
+                      <p:column headerText="Valor" width="120">
                           <h:outputText value="#{entrada.valorTotal}">
                           <f:convertNumber type="currency" currencySymbol="R$" />
                           </h:outputText>
                       </p:column> 
-                      <p:column headerText="Pago" width="100">
+                      <p:column headerText="Pago" width="120">
                           <h:outputText value="#{entrada.valorPago}">
                              <f:convertNumber type="currency" currencySymbol="R$" />
                           </h:outputText>
@@ -49,6 +49,16 @@
                       <p:column headerText="Parcelas" width="100" >
                           <h:outputText value="#{entrada.parcelamento}"/>
                       </p:column> 
+                      
+				         <p:columnGroup type="footer">
+				            <p:row>
+				                <p:column colspan="3" style="text-align:right;" footerText="Total:"/>
+				                <p:column footerText="#{financeiroController.totalValor}" />
+				                <p:column footerText="#{financeiroController.totalValorPago}" />
+				                <p:column footerText="" />
+				            </p:row>
+				        </p:columnGroup>
+				                      
                         <f:facet name="footer">
         					 <h:outputText value="#{fn:length(financeiroController.listaEntradaFinanceiro)} Registros Encontrados"/>
     				  </f:facet>

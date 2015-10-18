@@ -35,11 +35,19 @@
                           </h:outputText>
                       </p:column> 
                      
-                      <p:column headerText="Saldo Devedor " width="100">
+                      <p:column headerText="Saldo Devedor " width="120">
                           <h:outputText value="#{entrada.saldoDevedor}">
                             <f:convertNumber type="currency" currencySymbol="R$" />
                           </h:outputText>
                       </p:column> 
+                      
+                      <p:columnGroup type="footer">
+				            <p:row>
+				                <p:column colspan="3" style="text-align:right;" footerText="Total:"/>
+				                <p:column footerText="#{financeiroController.totalPendencia}" />
+				            </p:row>
+				        </p:columnGroup>
+                      
                        <f:facet name="footer">
         					 <h:outputText value="#{fn:length(financeiroController.listaEntradaFinanceiro)} Registros Encontrados"/>
     				  </f:facet>
