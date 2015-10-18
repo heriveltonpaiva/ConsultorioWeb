@@ -63,5 +63,12 @@ public class PessoaDao extends GenericDaoImpl{
 		return (List<Pessoa>) q.list();
 		
 	}
+	
+	public Arquivo findArquivoByIdPessoa(int idPessoa){	
+		String hql = "select a From Pessoa p JOIN p.arquivo a where p.id = :idPessoa"; 	
+		Query q = getSession().createQuery(hql);
+		q.setParameter("idPessoa", idPessoa);		
+		return (Arquivo) q.uniqueResult();
+	}
 }
 

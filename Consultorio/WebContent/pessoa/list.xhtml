@@ -3,18 +3,23 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+      
 
     <ui:composition template="/template.xhtml">
         <ui:define name="corpo">
-        <h:form id="formtable">
-        <h2>Pessoas</h2>
-        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-        <h:panelGrid columns="2" style="margin-bottom:20px;" >
-            <b:commandButton  value="Cadastrar" icon="ui-icon-plusthick" action="#{pessoaController.iniciarCadastro}" style="margin-right:2px; width:150px;"/>
-            <b:button value="Listar" icon="ui-icon-calculator" disabled="true" style="width:150px;"/>
-               
-        </h:panelGrid>    
+        
+        <h:form>
+        	<h2>Pessoas</h2>
+        	<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+	        <h:panelGrid columns="2" style="margin-bottom:20px;" >
+	            <b:commandButton  value="Cadastrar" iconAwesome="user-plus" action="#{pessoaController.iniciarCadastro}" style="margin-right:2px; width:150px;"/>
+	            <b:button value="Listar" iconAwesome="list" disabled="true" style="width:150px;"/>
+	       </h:panelGrid>    
+       </h:form>
+       
+       <h:form id="formtable">        
                   <p:dataTable id="tabela" var="item" value="#{pessoaController.listagem}" style="margin-bottom:20px;">
                       
                       <p:column headerText="Nome" >
@@ -35,35 +40,80 @@
                           <h:outputText value="#{item.contatoFormatado}"/><br/>
                       </p:column>
                       
-                      <p:column headerText="Observação" >
-                          <h:outputText value="#{item.observacao}"/>
-                      </p:column>
-                        
-                      <p:column headerText="Ativo" width="60">
-                          <h:outputText value="#{item.ativo}"/>
-                      </p:column> 
-                      
-                      <p:column  width="50">
+                      <p:column  headerText="Ações" width="150">
                       	 
-                      	 <p:commandButton  icon="ui-icon-search" oncomplete="PF('dlg2').show();" update=":formtable:dlg" >
-                             <f:setPropertyActionListener target="#{pessoaController.idFoto}" value="#{item.arquivo.id}"  />  
+                      	 <p:commandButton  icon="ui-icon-search" oncomplete="PF('dlg2').show();" update=":formtable:dlgInfopessoa" title="Visualizar Informações">
+                             <f:setPropertyActionListener target="#{pessoaController.idFoto}" value="#{item.arquivo.id}"  />
+                             <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{item}"  />   
                        	 </p:commandButton>
                          
-                          <p:commandButton  action="#{pessoaController.editar}" icon="ui-icon-pencil" >
+                          <p:commandButton  title="Editar Informações" action="#{pessoaController.editar}" icon="ui-icon-pencil" >
                                 <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{item}"  />             
                           </p:commandButton>
 
-                          <p:commandButton  action="#{pessoaController.remover}" icon="ui-icon-close" update="tabela"  >
-                                                          <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{item}"  />             
+                          <p:commandButton title="Excluir pessoa" action="#{pessoaController.remover}" icon="ui-icon-close" update="tabela">
+                                   <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{item}"  />             
                           </p:commandButton>
 
                         </p:column>
-                        
+                        <f:facet name="footer">
+        						<h:outputText value="#{fn:length(pessoaController.listagem)} Registros Encontrados"/>
+    		 			</f:facet>
                   </p:dataTable>
                  
          
-          <p:dialog  id="dlg" widgetVar="dlg2" height="400" width="350" resizable="false" closable="true">
-						<h:graphicImage  value="/resourcers/images/#{pessoaController.idFoto}.jpeg" cache="false" width="300" height="350" />
+          <p:dialog  id="dlgInfopessoa" header="Informações do pessoa" widgetVar="dlg2" height="500" width="500" resizable="true" closable="true">
+          
+          
+          				<h:panelGrid columns="1">
+						    <h:outputLabel value="Nome do pessoa" />
+						    <h:outputText value="#{pessoaController.pessoa.nome}"/>
+						    <h:outputLabel value="Nome da mãe" rendered="#{ not empty pessoaController.pessoa.nomeMae}"/>
+						    <h:outputText value="#{pessoaController.pessoa.nomeMae}" />
+						    <h:outputLabel value="Nome do Pai" rendered="#{ not empty pessoaController.pessoa.nomePai}"/>
+						    <h:outputText value="#{pessoaController.pessoa.nomePai}"/>
+						    <h:outputLabel value="Nacionalidade" rendered="#{ not empty pessoaController.pessoa.nacionalidade}"/>
+						    <h:outputText value="#{pessoaController.pessoa.nacionalidade}"/>
+						    <h:outputLabel value="Naturalidade" rendered="#{ not empty pessoaController.pessoa.naturalidade}"/>
+						    <h:outputText value="#{pessoaController.pessoa.naturalidade}"/>
+						    <h:outputLabel value="Sexo" rendered="#{ not empty pessoaController.pessoa.sexo}"/>
+						    <h:outputText value="#{pessoaController.pessoa.sexo}"/>
+						    <h:outputLabel value="Data de Nascimento" rendered="#{ not empty pessoaController.pessoa.dataNascimento}"/>
+						    <h:outputText value="#{pessoaController.pessoa.dataNascimento}">
+						    	<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+						    </h:outputText>
+						    <h:outputLabel value="RG" rendered="#{ not empty pessoaController.pessoa.rg}"/>
+						    <h:outputText value="#{pessoaController.pessoa.rg}"/>
+						    <h:outputLabel value="Cpf" rendered="#{ not empty pessoaController.pessoa.cpf}"/>
+						    <h:outputText value="#{pessoaController.pessoa.cpf}"/>
+						    <h:outputLabel value="Ativo" />
+						    <h:outputText value="#{pessoaController.pessoa.ativo}"/>
+						    <h:outputLabel value="Observação" rendered="#{ not empty pessoaController.pessoa.observacao}"/>
+						    <h:outputText value="#{pessoaController.pessoa.observacao}"/>
+						</h:panelGrid>
+						
+						
+						<h:panelGrid columns="1">
+						    <h:outputLabel value="Endereço" rendered="#{ not empty pessoaController.pessoa.endereco.rua}"/>
+						    <h:outputText value="#{pessoaController.pessoa.endereco.rua}, #{pessoaController.pessoa.endereco.numero}" rendered="#{ not empty pessoaController.pessoa.endereco.rua}"/>
+						 
+						    <h:outputLabel value="Cidade - UF" rendered="#{ not empty pessoaController.pessoa.endereco.cidade}"/>
+						    <h:outputText value="#{pessoaController.pessoa.endereco.cidade} - #{pessoaController.pessoa.endereco.estado}" rendered="#{ not empty pessoaController.pessoa.endereco.cidade}"/>
+						</h:panelGrid>    
+						
+					<h:panelGrid columns="1" rendered="#{not empty pessoaController.pessoa.contato}">
+						<h:outputLabel value="Telefone" rendered="#{pessoaController.pessoa.contato.telefone > 0}"/>
+						<h:outputText value="#{pessoaController.pessoa.contato.telefone}" rendered="#{pessoaController.pessoa.contato.telefone > 0}"/>
+						<h:outputLabel value="Celular" rendered="#{pessoaController.pessoa.contato.celular > 0}"/>
+						<h:outputText value="#{pessoaController.pessoa.contato.celular}" rendered="#{pessoaController.pessoa.contato.celular > 0}"/>
+						<h:outputLabel value="E-mail" rendered="#{not empty pessoaController.pessoa.contato.email}"/>
+						<h:outputText value="#{pessoaController.pessoa.contato.email}" rendered="#{not empty pessoaController.pessoa.contato.email}"/>	
+					</h:panelGrid>
+			
+				<h:panelGrid columns="1">
+					<h:outputLabel value="Foto" />
+					<h:graphicImage value="/images/#{pessoaController.pessoa.id}" cache="false" width="200" height="250" />
+	            </h:panelGrid>
           </p:dialog>
           
           </h:form>

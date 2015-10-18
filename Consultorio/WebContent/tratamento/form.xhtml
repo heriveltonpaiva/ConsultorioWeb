@@ -14,8 +14,8 @@
                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />     
             
                 <h:panelGrid columns="2" style="margin-bottom:20px;">
-                    <b:button value="Cadastrar" icon="ui-icon-plusthick" disabled="true" style="margin-right:2px; width:150px;"/>
-                    <b:commandButton value="Listar" icon="ui-icon-calculator" action="#{tratamentoController.carregarListagem}" style="width:150px;"/>
+                    <b:button value="Cadastrar" iconAwesome="plus-square" disabled="true" style="margin-right:2px; width:150px;"/>
+                    <b:commandButton value="Listar" iconAwesome="list" action="#{tratamentoController.carregarListagem}" style="width:150px;"/>
                 </h:panelGrid>   
                
                         <h:outputLabel value="Descricão*"/>
@@ -28,7 +28,7 @@
                                            var ="x" itemLabel="#{x.descricao}" itemValue="#{x.id}" />
                         </b:selectOneMenu>
                     
-                    <b:commandButton action="#{tratamentoController.salvar}" value="Cadastrar Tratamento" style="margin-bottom:20px; width:200px;" />
+                    <b:commandButton action="#{tratamentoController.salvar}" value="Cadastrar Tratamento" style="margin-bottom:20px; width:200px;" look="primary"/>
 
             </h:form>
         </ui:define>

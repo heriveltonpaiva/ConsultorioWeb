@@ -7,17 +7,17 @@
     <ui:composition template="/template.xhtml">
         <ui:define name="corpo">
         
-            <h:form id="formpessoa" enctype="multipart/form-data">
+        <h:form>  
                 <h2>Cadastro de Pessoas</h2>
 
         		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-
-
                 <h:panelGrid columns="2" style="margin-bottom:20px;">
-                    <b:button value="Cadastrar" icon="ui-icon-plusthick" disabled="true" style="margin-right:2px; width:150px;"/>
-                    <b:commandButton value="Listar" icon="ui-icon-calculator" action="#{pessoaController.carregarListagem}" style="width:150px;" />
-                </h:panelGrid>   
-	
+                    <b:button value="Cadastrar" iconAwesome="user-plus" disabled="true" style="margin-right:2px; width:150px;"/>
+                    <b:commandButton value="Listar" iconAwesome="list" action="#{pessoaController.carregarListagem}" style="width:150px;" />
+                </h:panelGrid>  
+       </h:form>
+                 
+	<h:form id="formpessoa" enctype="multipart/form-data">
 	 <p:tabView>
         <p:tab title="Dados Pessoais">
             <h:panelGrid columns="2" >

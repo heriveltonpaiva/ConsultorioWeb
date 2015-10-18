@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import br.arquitetura.dao.GenericDaoImpl;
 import br.arquitetura.dao.PessoaDao;
+import br.arquitetura.dominio.Arquivo;
 import br.arquitetura.dominio.Medicacao;
 import br.arquitetura.dominio.PacienteAtendimento;
 import br.arquitetura.dominio.Pessoa;
@@ -81,5 +82,10 @@ public class PessoaServiceImpl extends GenericServiceImpl<Pessoa> implements Pes
 		public List<Pessoa> findByTipoPessoa(int tipo) {
 			PessoaDao dao = new PessoaDao();
 			return dao.findByTipoPessoa(tipo);
+		}
+		
+		public Arquivo findArquivoByIdPessoa(int idPessoa){	
+			PessoaDao dao = new PessoaDao();
+			return dao.findArquivoByIdPessoa(idPessoa);
 		}
 }

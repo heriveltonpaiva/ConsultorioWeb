@@ -30,6 +30,7 @@ import br.arquitetura.service.ArcadaDentariaServiceImpl;
 import br.arquitetura.service.DenteArcadaDentariaServiceImpl;
 import br.arquitetura.service.DenteServiceImpl;
 import br.arquitetura.service.PessoaServiceImpl;
+import br.arquitetura.utils.PaginasUtil;
 
 @Component
 @Scope("session")
@@ -139,7 +140,7 @@ public class PacienteController {
 		listagem.addAll(listagemAtualizada);
 		
 		
-		carregarFotosPacientes();
+		//carregarFotosPacientes();
 
 		return PaginasUtil.LISTAR_PACIENTES;
 	}
@@ -234,9 +235,10 @@ public class PacienteController {
 		
 	}
 	
-	public void carregarFotosPacientes(){
+//	public void carregarFotosPacientes() {
 //		try {
 //			for (Pessoa pessoa : listagem) {
+//
 //				if (pessoa.getArquivo() != null) {
 //					String content[] = pessoa.getArquivo().getContentType().split("/");
 //					String nomeArquivo = pessoa.getArquivo().getId() + "." + content[1];
@@ -249,21 +251,21 @@ public class PacienteController {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-		
-	}
-
-    private void criarArquivo(byte[] bytes, String arquivo){
-		FileOutputStream fos;
-		try {
-			fos = new FileOutputStream(arquivo);
-			fos.write(bytes);
-			fos.close();
-		} catch (FileNotFoundException ex) {
-			ex.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+//
+//	}
+//
+//	private void criarArquivo(byte[] bytes, String arquivo) {
+//		FileOutputStream fos;
+//		try {
+//			fos = new FileOutputStream(arquivo);
+//			fos.write(bytes);
+//			fos.close();
+//		} catch (FileNotFoundException ex) {
+//			ex.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
     public void carregarListagensCombo(){
     	

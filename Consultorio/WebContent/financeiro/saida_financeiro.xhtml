@@ -25,7 +25,7 @@
                          allowTypes="/(\.|\/)(doc|docx|xls|xlsx|pdf|jpg)$/"  invalidFileMessage="Formato de arquivo invalido"/>
                         
              </h:panelGrid>
-             <b:commandButton action="#{financeiroController.cadastrarSaida}" value="Registrar" style="margin-bottom:20px; width:200px;" />
+             <b:commandButton action="#{financeiroController.cadastrarSaida}" value="Cadastrar Saída" style="margin-bottom:20px; width:200px;" look="primary"/>
             
              <p:dataTable id="tabela" var="item" value="#{financeiroController.listaSaidaFinanceiro}" style="margin-bottom:20px;" emptyMessage="Nenhum registro encontrado.">
                       

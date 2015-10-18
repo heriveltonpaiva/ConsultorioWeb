@@ -19,6 +19,7 @@ import br.arquitetura.dominio.Pessoa;
 import br.arquitetura.dominio.TipoPessoa;
 import br.arquitetura.dominio.Users;
 import br.arquitetura.service.PessoaServiceImpl;
+import br.arquitetura.utils.PaginasUtil;
 
 @Component
 @Scope("session")

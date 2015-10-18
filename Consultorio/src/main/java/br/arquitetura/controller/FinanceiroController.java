@@ -22,6 +22,7 @@ import br.arquitetura.dominio.Arquivo;
 import br.arquitetura.dominio.EntradaFinanceiro;
 import br.arquitetura.dominio.SaidaFinanceiro;
 import br.arquitetura.service.ConsultaGeralServiceImpl;
+import br.arquitetura.utils.PaginasUtil;
 
 @Component
 @Scope("session")

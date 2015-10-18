@@ -1,4 +1,4 @@
-package br.arquitetura.controller;
+package br.arquitetura.utils;
 
 public class PaginasUtil {
 	

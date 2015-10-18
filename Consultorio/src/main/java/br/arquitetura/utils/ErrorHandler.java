@@ -1,4 +1,4 @@
-package br.arquitetura.controller;
+package br.arquitetura.utils;
 
 import javax.faces.context.FacesContext;
 
@@ -37,6 +37,7 @@ public class ErrorHandler {
 				.get("javax.servlet.error.exception") != null) {
 			String val = (String) ((Exception) FacesContext.getCurrentInstance().getExternalContext().getRequestMap()
 					.get("javax.servlet.error.exception")).toString();
+			
 			return val;
 		} else {
 			return "";

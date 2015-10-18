@@ -2,6 +2,7 @@ package br.arquitetura.service;
 
 import java.util.List;
 
+import br.arquitetura.dominio.Arquivo;
 import br.arquitetura.dominio.Medicacao;
 import br.arquitetura.dominio.PacienteAtendimento;
 import br.arquitetura.dominio.Pessoa;
@@ -19,4 +20,6 @@ public interface PessoaService {
 	public void salvarPacienteAtendimento(PacienteAtendimento paciente);
 	
 	public List<Pessoa> findByTipoPessoa(int tipo);
+	
+	public Arquivo findArquivoByIdPessoa(int idPessoa);
 }

@@ -1,5 +1,6 @@
 package br.arquitetura.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,8 +18,9 @@ import br.arquitetura.service.PessoaServiceImpl;
 
 @Component
 @Scope("session")
-public class AtendimentoController {
+public class AtendimentoController implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private PessoaServiceImpl pessoaService;
 	private List<Pessoa> listaEsperaPacientes;
     private Pessoa paciente;
@@ -56,7 +58,8 @@ public class AtendimentoController {
 				paciente.getAtendimento().setOrdemChegada(ordemDoPaciente+1);
 				paciente.getAtendimento().setDesistencia(false);
 				paciente.getAtendimento().setAtendido(false);
-				
+				paciente.setMedicacoes(pessoaService.findMedicacaoByPaciente(paciente));
+
 				listaEsperaPacientes.add(paciente);
 			}else{			
 				

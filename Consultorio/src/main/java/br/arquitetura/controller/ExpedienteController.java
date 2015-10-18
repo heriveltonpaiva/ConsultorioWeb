@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.arquitetura.dominio.Expediente;
 import br.arquitetura.service.ExpedienteServiceImpl;
+import br.arquitetura.utils.PaginasUtil;
 
 @Component
 @Scope("request")

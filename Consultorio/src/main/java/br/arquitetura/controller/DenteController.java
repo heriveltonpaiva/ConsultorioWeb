@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.arquitetura.dominio.Dente;
 import br.arquitetura.service.DenteServiceImpl;
+import br.arquitetura.utils.PaginasUtil;
 
 @Component
 @Scope("session")

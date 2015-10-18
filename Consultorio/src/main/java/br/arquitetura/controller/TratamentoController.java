@@ -14,6 +14,7 @@ import br.arquitetura.dominio.CategoriaTratamento;
 import br.arquitetura.dominio.Tratamento;
 import br.arquitetura.service.CategoriaTratamentoServiceImpl;
 import br.arquitetura.service.TratamentoServiceImpl;
+import br.arquitetura.utils.PaginasUtil;
 
 @Component
 @Scope("session")

@@ -17,6 +17,7 @@ import br.arquitetura.dominio.Pessoa;
 import br.arquitetura.service.AgendamentoServiceImpl;
 import br.arquitetura.service.ExpedienteServiceImpl;
 import br.arquitetura.service.PessoaServiceImpl;
+import br.arquitetura.utils.PaginasUtil;
 
 @Component
 @Scope("session")

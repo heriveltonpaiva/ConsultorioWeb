@@ -1,4 +1,4 @@
-package br.arquitetura.converter;
+package br.arquitetura.utils;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;

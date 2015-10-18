@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.arquitetura.dominio.CategoriaTratamento;
 import br.arquitetura.service.CategoriaTratamentoServiceImpl;
+import br.arquitetura.utils.PaginasUtil;
 
 @Component
 @Scope("session")

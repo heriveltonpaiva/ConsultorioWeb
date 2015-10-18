@@ -31,6 +31,7 @@ import br.arquitetura.service.DenteArcadaDentariaServiceImpl;
 import br.arquitetura.service.DenteServiceImpl;
 import br.arquitetura.service.PessoaServiceImpl;
 import br.arquitetura.service.TratamentoServiceImpl;
+import br.arquitetura.utils.PaginasUtil;
 
 @Component
 @Scope("session")
@@ -292,6 +293,7 @@ public class ConsultaController {
 	public void carregaPaciente(SelectEvent event){  
         consulta.setPessoa((Pessoa)event.getObject());  
         pacienteDaConsulta = consulta.getPessoa();
+	
     }
 	
 	@Transactional

@@ -10,9 +10,11 @@
             <h:form id="form" >
                 <h2>Cadastro de Expedientes</h2>
 
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />     
+
                 <h:panelGrid columns="2" style="margin-bottom:20px;">
-                    <b:button value="Cadastrar" icon="ui-icon-plusthick" disabled="true" style="margin-right:2px; width:150px;"/>
-                    <b:commandButton value="Listar" icon="ui-icon-calculator" action="#{expedienteController.carregarListagem}" style="width:150px;"/>
+                    <b:button value="Cadastrar" iconAwesome="plus-square" disabled="true" style="margin-right:2px; width:150px;"/>
+                    <b:commandButton value="Listar" iconAwesome="list" action="#{expedienteController.carregarListagem}" style="width:150px;"/>
                 </h:panelGrid>   
 
 					<p:outputLabel value="Dia:" />
@@ -34,10 +36,7 @@
 			        <p:calendar id="horaFinal" locale="pt_BR" value="#{expedienteController.expediente.horaFinal}" pattern="HH:mm" timeOnly="true"  />
                     <br/>
                     
-                    <b:commandButton action="#{expedienteController.salvar}" value="Cadastrar expediente" style="margin-bottom:20px; margin-top:10px; width:200px;"/>
-                        
-
-                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />     
+                    <b:commandButton action="#{expedienteController.salvar}" value="Cadastrar expediente" style="margin-bottom:20px; margin-top:10px; width:200px;" look="primary"/>
             </h:form>
         </ui:define>
     </ui:composition>
