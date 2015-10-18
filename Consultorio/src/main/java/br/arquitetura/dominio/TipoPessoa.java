@@ -6,7 +6,7 @@ public class TipoPessoa {
 
    public static final int DENTISTA = 2;
 
-   public static final int USUARIO = 3;
+   public static final int ATENDENTE = 3;
 
    
    public boolean isPaciente(int i){
@@ -18,8 +18,8 @@ public class TipoPessoa {
 	   return false;
    }
    
-   public boolean isUsuario(int i){
-	   if(i == USUARIO){return true;}
+   public boolean isAtendente(int i){
+	   if(i == ATENDENTE){return true;}
 	   return false;
    }
    

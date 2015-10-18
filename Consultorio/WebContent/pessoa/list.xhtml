@@ -1,0 +1,72 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="corpo">
+        <h:form id="formtable">
+        <h2>Pessoas</h2>
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        <h:panelGrid columns="2" style="margin-bottom:20px;" >
+            <b:commandButton  value="Cadastrar" icon="ui-icon-plusthick" action="#{pessoaController.iniciarCadastro}" style="margin-right:2px; width:150px;"/>
+            <b:button value="Listar" icon="ui-icon-calculator" disabled="true" style="width:150px;"/>
+               
+        </h:panelGrid>    
+                  <p:dataTable id="tabela" var="item" value="#{pessoaController.listagem}" style="margin-bottom:20px;">
+                      
+                      <p:column headerText="Nome" >
+                          <h:outputText value="#{item.nome}"/>
+                      </p:column> 
+                      <p:column headerText="Nascimento" >
+                          <h:outputText value="#{item.dataNascimento}">
+                          	<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                          </h:outputText>
+                      </p:column>
+                      
+                      <p:column headerText="Endereço">
+                      
+                          <h:outputText value="#{item.endereco.rua}"/>
+                      </p:column> 
+                      
+                      <p:column headerText="Contato" >
+                          <h:outputText value="#{item.contatoFormatado}"/><br/>
+                      </p:column>
+                      
+                      <p:column headerText="Observação" >
+                          <h:outputText value="#{item.observacao}"/>
+                      </p:column>
+                        
+                      <p:column headerText="Ativo" width="60">
+                          <h:outputText value="#{item.ativo}"/>
+                      </p:column> 
+                      
+                      <p:column  width="50">
+                      	 
+                      	 <p:commandButton  icon="ui-icon-search" oncomplete="PF('dlg2').show();" update=":formtable:dlg" >
+                             <f:setPropertyActionListener target="#{pessoaController.idFoto}" value="#{item.arquivo.id}"  />  
+                       	 </p:commandButton>
+                         
+                          <p:commandButton  action="#{pessoaController.editar}" icon="ui-icon-pencil" >
+                                <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{item}"  />             
+                          </p:commandButton>
+
+                          <p:commandButton  action="#{pessoaController.remover}" icon="ui-icon-close" update="tabela"  >
+                                                          <f:setPropertyActionListener target="#{pessoaController.pessoa}" value="#{item}"  />             
+                          </p:commandButton>
+
+                        </p:column>
+                        
+                  </p:dataTable>
+                 
+         
+          <p:dialog  id="dlg" widgetVar="dlg2" height="400" width="350" resizable="false" closable="true">
+						<h:graphicImage  value="/resourcers/images/#{pessoaController.idFoto}.jpeg" cache="false" width="300" height="350" />
+          </p:dialog>
+          
+          </h:form>
+      </ui:define>
+    </ui:composition>
+</html>

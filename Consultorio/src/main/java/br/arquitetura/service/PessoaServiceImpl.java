@@ -15,6 +15,7 @@ public class PessoaServiceImpl extends GenericServiceImpl<Pessoa> implements Pes
 
 
 	 private final String SEQUENCE = "pessoa_id_seq";
+	 private final String SEQUENCE_USER = "users_id_seq";
 	 private final String SEQUENCE_ARQUIVO = "arquivo_id_seq";
 	 private final String SEQUENCE_ENDERECO = "endereco_id_seq";
 	 private final String SEQUENCE_CONTATO = "contato_id_seq";
@@ -23,8 +24,6 @@ public class PessoaServiceImpl extends GenericServiceImpl<Pessoa> implements Pes
 		public void cadastrar(Pessoa obj) {
 	        
 			PessoaDao dao = new PessoaDao();
-			
-			 dao.getSession().getTransaction().begin();
 			
 			 if(obj.getArquivo()!=null){
 				if(obj.getArquivo().getDescricao()!=null){
@@ -40,16 +39,22 @@ public class PessoaServiceImpl extends GenericServiceImpl<Pessoa> implements Pes
 			}
 			if(obj.getContato()!=null){
 				if(obj.getContato().getCelular() >0 || obj.getContato().getTelefone() >0 || !obj.getContato().getEmail().equals("")){
-			        obj.getContato().setId(nextSequence(SEQUENCE_CONTATO));;
+			        obj.getContato().setId(nextSequence(SEQUENCE_CONTATO));
 			        dao.salvarContatoPessoa(obj.getContato());
 				}else{
 					obj.setContato(null);
 				}
 			}
+			
+			if(obj.getUsuario()!=null){
+				GenericDaoImpl genericDao = new GenericDaoImpl();
+				obj.getUsuario().setId(nextSequence(SEQUENCE_USER));
+				genericDao.cadastrar(obj.getUsuario());
+			}
+			
 	        obj.setId(nextSequence(SEQUENCE));
 	        super.cadastrar(obj);
 	        
-	        dao.getSession().getTransaction().commit();
 		}
 		
 		/**
@@ -72,4 +77,9 @@ public class PessoaServiceImpl extends GenericServiceImpl<Pessoa> implements Pes
 			genericDao.cadastrar(paciente);
 		}
 
+		
+		public List<Pessoa> findByTipoPessoa(int tipo) {
+			PessoaDao dao = new PessoaDao();
+			return dao.findByTipoPessoa(tipo);
+		}
 }

@@ -3,13 +3,11 @@ package br.arquitetura.dao;
 import java.util.List;
 
 import org.hibernate.Query;
-
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.arquitetura.dominio.Arquivo;
 import br.arquitetura.dominio.Contato;
-import br.arquitetura.dominio.DenteArcadaDentaria;
 import br.arquitetura.dominio.Endereco;
 import br.arquitetura.dominio.Medicacao;
 import br.arquitetura.dominio.Pessoa;
@@ -46,6 +44,7 @@ public class PessoaDao extends GenericDaoImpl{
 			}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Medicacao> findMedicacaoByPaciente(Pessoa paciente){
 		
 		String hql = "From Medicacao m where m.paciente.id = :idPaciente"; 
@@ -55,5 +54,14 @@ public class PessoaDao extends GenericDaoImpl{
 			return (List<Medicacao>) q.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Pessoa> findByTipoPessoa(int tipo){
+		
+		String hql = "From Pessoa p where p.tipoPessoa = :idTipo"; 	
+		Query q = getSession().createQuery(hql);
+		q.setParameter("idTipo", tipo);		
+		return (List<Pessoa>) q.list();
+		
+	}
 }
 

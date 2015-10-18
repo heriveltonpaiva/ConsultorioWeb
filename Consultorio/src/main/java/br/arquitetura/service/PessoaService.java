@@ -17,4 +17,6 @@ public interface PessoaService {
 	public List<Medicacao> findMedicacaoByPaciente(Pessoa paciente);
 	
 	public void salvarPacienteAtendimento(PacienteAtendimento paciente);
+	
+	public List<Pessoa> findByTipoPessoa(int tipo);
 }

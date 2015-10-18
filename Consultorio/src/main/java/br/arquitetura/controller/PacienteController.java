@@ -126,7 +126,7 @@ public class PacienteController {
 	
 	@Transactional
 	public String carregarListagem(){
-		listagem = pessoaService.listarTodos("Pessoa");
+		listagem = pessoaService.findByTipoPessoa(TipoPessoa.PACIENTE);
 		
 		//Adicionando uma lista de medicações tomada pelo paciente.
 		List<Pessoa> listagemAtualizada = new ArrayList<Pessoa>();

@@ -20,6 +20,9 @@ public class PaginasUtil {
 	public static final String CADASTRAR_PACIENTES = "/paciente/form.xhtml";
 	public static final String LISTAR_PACIENTES = "/paciente/list.xhtml";
 	
+	public static final String CADASTRAR_PESSOAS = "/pessoa/form.xhtml";
+	public static final String LISTAR_PESSOAS = "/pessoa/list.xhtml";
+	
 	public static final String CADASTRAR_AGENDAMENTO = "/agendamento/form.xhtml";
 	public static final String LISTAR_AGENDAMENTOS = "/agendamento/list.xhtml";
 	
