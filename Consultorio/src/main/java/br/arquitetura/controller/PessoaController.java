@@ -53,7 +53,7 @@ public class PessoaController {
 			    
 			    if(pessoa.getUsuario().getAutorizacao().equals("ROLE_DENTISTA")){
 			    	pessoa.setTipoPessoa(TipoPessoa.DENTISTA);
-			    }else if(pessoa.getUsuario().getAutorizacao().equals("ROLE_ATENDENTE")){
+			    }else{
 			    	pessoa.setTipoPessoa(TipoPessoa.ATENDENTE);
 			    }
 			    
@@ -99,6 +99,7 @@ public class PessoaController {
 	}
 	
 	public String iniciarCadastro(){
+		reset();
 		return PaginasUtil.CADASTRAR_PESSOAS;
 	}
 	

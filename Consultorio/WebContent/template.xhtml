@@ -61,9 +61,7 @@ PrimeFaces.locales['pt_BR'] = {
     </h:head>
    
     <h:body>
-    
-<b:navBar brand="Consultório Web" brandHref="#" inverse="false"  >
-   
+<b:navBar  brand="Consultório Web" inverse="false" >   
     <b:navbarLinks>
          <b:navLink value="Inicio" outcome="/index.xhtml" iconAwesome="home" />
             <b:navLink value="Realizar Consulta" outcome="/consulta/passo1.xhtml" iconAwesome="heart" />
@@ -72,8 +70,8 @@ PrimeFaces.locales['pt_BR'] = {
             <b:navLink value="Agendamentos" outcome="/agendamento/form.xhtml" iconAwesome="calendar"/>
                 
             <b:dropMenu value="Cadastros">
+            	<b:navLink value="Categoria Tratamento" outcome="/categoriaTratamento/form.xhtml" iconAwesome="tags"/>
 	            <b:navLink value="Tratamento" outcome="/tratamento/form.xhtml" iconAwesome="leaf"/>
-	            <b:navLink value="Categoria Tratamento" outcome="/categoriaTratamento/form.xhtml" iconAwesome="tags"/>
 	           	<b:navLink value="Dentes" outcome="/dente/form.xhtml" iconAwesome="tint"/>
 	            <b:navLink value="Expedientes" outcome="/expediente/form.xhtml" iconAwesome="tasks"/>
 	            <b:navLink value="Pacientes" outcome="/paciente/form.xhtml" iconAwesome="user" />

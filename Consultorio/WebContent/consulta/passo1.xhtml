@@ -72,18 +72,18 @@
 	                     </p:column>
                 	</p:dataTable>
 
-
+               <h:panelGrid columns="3" style="margin-top:20px; margin-bottom:20px;">
          		<h:outputLabel value="Buscar Paciente:" />
          
-                 <p:autoComplete id="autoCompletePaciente"  value="#{atendimentoController.paciente}" completeMethod="#{pacienteController.completePaciente}" size="70" 
+                 <p:autoComplete id="autoCompletePaciente"  value="#{atendimentoController.paciente}" completeMethod="#{pacienteController.completePaciente}" size="70"
                   var="pessoa" itemLabel="#{pessoa.nome}" itemValue="#{pessoa}" converter="pacienteConverter" > 
                   <p:ajax event="itemSelect" listener="#{consultaController.carregaPaciente}" update="formAutoComplete, tabela"  />                   
                   </p:autoComplete>
                  
                   <b:commandButton action="#{atendimentoController.adicionarPacienteNaFilaEspera}" value="Adicionar a fila" style="width:140px;margin-left:10px;" look="primary" iconAwesome="plus-circle"/>
-                  
+               </h:panelGrid>   
                
-               <p:dataTable id="tabela" var="item" value="#{historicoConsultaController.listHistoricoConsultas}" style="margin-top:20px; margin-bottom:20px;" >  
+               <p:dataTable id="tabela" var="item" value="#{historicoConsultaController.listHistoricoConsultas}" style="margin-top:20px; margin-bottom:20px;" rendered="#{not empty historicoConsultaController.listHistoricoConsultas}">  
                    <f:facet name="header">
 						Histórico do Paciente
 					</f:facet>             

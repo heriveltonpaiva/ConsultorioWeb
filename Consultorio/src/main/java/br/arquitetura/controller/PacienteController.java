@@ -1,7 +1,5 @@
 package br.arquitetura.controller;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,9 +84,10 @@ public class PacienteController {
 	
 	@Transactional
 	public String salvar(){
-		  try {
+		
 			    paciente.setTipoPessoa(TipoPessoa.PACIENTE);
-			    salvarArquivo();
+			    try {
+			    	salvarArquivo();
 				pessoaService.cadastrar(paciente);
 		        criarArcadaDentaria(paciente);
 		        salvarMedicacaoPaciente();
@@ -139,9 +138,6 @@ public class PacienteController {
 		listagem = new ArrayList<Pessoa>();
 		listagem.addAll(listagemAtualizada);
 		
-		
-		//carregarFotosPacientes();
-
 		return PaginasUtil.LISTAR_PACIENTES;
 	}
 	
@@ -166,6 +162,7 @@ public class PacienteController {
     }
 	
 	public String iniciarCadastro(){
+		reset();
 		return PaginasUtil.CADASTRAR_PACIENTES;
 	}
 	
@@ -235,37 +232,6 @@ public class PacienteController {
 		
 	}
 	
-//	public void carregarFotosPacientes() {
-//		try {
-//			for (Pessoa pessoa : listagem) {
-//
-//				if (pessoa.getArquivo() != null) {
-//					String content[] = pessoa.getArquivo().getContentType().split("/");
-//					String nomeArquivo = pessoa.getArquivo().getId() + "." + content[1];
-//					String arquivo = "C:\\Users\\Herivelton\\workspace_eclipse_mars\\Consultorio\\WebContent\\resourcers\\images\\"
-//							+ File.separator + nomeArquivo;
-//
-//					criarArquivo(pessoa.getArquivo().getConteudo(), arquivo);
-//				}
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//	}
-//
-//	private void criarArquivo(byte[] bytes, String arquivo) {
-//		FileOutputStream fos;
-//		try {
-//			fos = new FileOutputStream(arquivo);
-//			fos.write(bytes);
-//			fos.close();
-//		} catch (FileNotFoundException ex) {
-//			ex.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
     public void carregarListagensCombo(){
     	

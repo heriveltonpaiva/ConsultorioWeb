@@ -25,22 +25,18 @@ public class ImageServlet extends HttpServlet {
         // No caso, se o usuário digitasse www.projeto.com/images/1
         // o request.getPathInfo() iria retornar: /1
         String s = request.getPathInfo().substring(1);
- 
-        
         service = new PessoaServiceImpl();
         
         if(s!=null){
         Arquivo arq =  service.findArquivoByIdPessoa(Integer.parseInt(s));
-        //Recuperando um objeto imagem do banco de dados através do ID passado na URL digitada
 	        if(arq!=null){
-		        response.setContentType(arq.getContentType()); //Passando o tipo da foto ex: jpg, png, etc.
+		        response.setContentType(arq.getContentType()); 
 		        OutputStream out = response.getOutputStream();
-		        out.write(arq.getConteudo()); // Passando o array de bytes
+		        out.write(arq.getConteudo()); 
 		        out.close();
 	        }
         }
-        // Aqui a imagem estará renderizada e disponível em,
-        // por exemplo: www.projeto.com/images/1
+
     }
 }
 

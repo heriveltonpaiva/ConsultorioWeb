@@ -7,8 +7,6 @@ import br.arquitetura.dominio.Agendamento;
 
 public interface AgendamentoService extends GenericService<Agendamento>{
 	
-	public Integer gerarNumeroAgendamento();
-
 	public List<Agendamento> findAllAgendamentoByPeriodo(Date dataInicio, Date dataFinal);
 
 }

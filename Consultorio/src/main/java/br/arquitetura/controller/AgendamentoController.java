@@ -38,6 +38,8 @@ public class AgendamentoController {
 	public AgendamentoController() {
 		agendamentoService = new AgendamentoServiceImpl();
 		agendamento = new Agendamento();
+		carregarListagem();
+		agendamento.setNumero(getNumeroAgendamento());
 		agendamento.setPessoa(new Pessoa());
 		agendamento.setExpediente(new Expediente());
 		pessoaService = new PessoaServiceImpl();
@@ -64,7 +66,7 @@ public class AgendamentoController {
 		  	}catch(Exception e){
 		  		exibirMensagemErro(e);
 		  	}
-		return PaginasUtil.CADASTRAR_TRATAMENTO;
+		return PaginasUtil.CADASTRAR_AGENDAMENTO;
 	}
 	
 	@Transactional
@@ -110,7 +112,7 @@ public class AgendamentoController {
 		agendamento = new Agendamento();
         agendamento.setPessoa(new Pessoa());
         agendamento.setExpediente(new Expediente());
-        agendamento.setNumero(agendamentoService.gerarNumeroAgendamento());
+        agendamento.setNumero(getNumeroAgendamento());
         
         carregarListagemExpedientes();
         carregarListagemPacientes();
@@ -174,5 +176,10 @@ public class AgendamentoController {
 	}
 	public void exibirMensagemErro(Exception e){
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "" + e.getMessage()));		  	
+	}
+	
+	public int getNumeroAgendamento(){
+		 int proximaNumeracao = listagem.size()+1; 
+		 return proximaNumeracao;
 	}
 }

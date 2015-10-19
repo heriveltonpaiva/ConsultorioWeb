@@ -240,20 +240,24 @@ public class ConsultaController {
 			}
 				
 		}
-		consulta.setTratamento(tratamentoService.listarPorId("Tratamento", consulta.getTratamento().getId()));	    
-		consulta.setNumero(getNumeroProcedimento());
-		consulta.setDenteArcadaDentaria(dente);
-		consulta.getDenteArcadaDentaria().setEmTratamento(false);
-		consulta.getDenteArcadaDentaria().setSituacao(1);
-		
-		listaConsultaOperacoes.add(consulta);
-		
-		consulta = new Consulta();
-		consulta.setPessoa(pacienteDaConsulta);
-		consulta.setDenteArcadaDentaria(new DenteArcadaDentaria());
-		consulta.setTratamento(new Tratamento());
-		
-		exibirMensagemSucesso("Adicionado");
+		if(consulta.getTratamento().getId()>0){
+			consulta.setTratamento(tratamentoService.listarPorId("Tratamento", consulta.getTratamento().getId()));	    
+			consulta.setNumero(getNumeroProcedimento());
+			consulta.setDenteArcadaDentaria(dente);
+			consulta.getDenteArcadaDentaria().setEmTratamento(false);
+			consulta.getDenteArcadaDentaria().setSituacao(1);
+			
+			listaConsultaOperacoes.add(consulta);
+			
+			consulta = new Consulta();
+			consulta.setPessoa(pacienteDaConsulta);
+			consulta.setDenteArcadaDentaria(new DenteArcadaDentaria());
+			consulta.setTratamento(new Tratamento());
+			
+			exibirMensagemSucesso("Adicionado");
+		}else{
+			exibirMensagemErro("Informe o tratamento para o dente selecionado.");
+		}
 	}
 	
 	
@@ -363,8 +367,8 @@ public class ConsultaController {
 	public void exibirMensagemSucesso(String operacao){
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Registro "+operacao+" com Sucesso!"));
 	}
-	public void exibirMensagemErro(Exception e){
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "" + e.getMessage()));		  	
+	public void exibirMensagemErro(String msg){
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "" +msg));		  	
 	}
 	
 	@Transactional
@@ -429,4 +433,5 @@ public class ConsultaController {
 		consulta.setPessoa(new Pessoa());
 		consulta.setTratamento(new Tratamento());	
 	}
+
 }

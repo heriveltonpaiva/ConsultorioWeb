@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import br.arquitetura.dominio.Consulta;
@@ -20,6 +21,7 @@ import br.arquitetura.service.DenteArcadaDentariaServiceImpl;
  *
  */
 @Component
+@Scope("session")
 public class OdontogramaController {
     
 	private ConsultaServiceImpl consultaService;
@@ -46,6 +48,12 @@ public class OdontogramaController {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		if(getidDenteParam(fc)!=null){
 		int numeroDente = Integer.parseInt(getidDenteParam(fc));
+		
+		//Recupera o Id do paciente do Passo 2 do procedimento para exibição do histórico do dente.
+		if(paciente.getId() == 0){
+			paciente.setId(Integer.parseInt(getidPacienteParam(fc)));
+		}
+		
 			listagemDentesPaciente = denteArcadaDentariaService.findByPaciente(paciente);
 	
 			for (DenteArcadaDentaria d : listagemDentesPaciente){		
@@ -102,6 +110,15 @@ public class OdontogramaController {
 		return params.get("idDente");
 		
 	}
+	
+	public String getidPacienteParam(FacesContext fc){
+		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+		if(params.get("idPaciente")==null){
+			return null;
+		}
+		return params.get("idPaciente");
+	}
+	
 	public List<DenteArcadaDentaria> getListagemDentesPaciente() {
 		return listagemDentesPaciente;
 	}
@@ -116,4 +133,6 @@ public class OdontogramaController {
 	public void exibirMensagemAlertaPadrao(){
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Nenhum procedimento realizado para esse paciente.", "" ));		  	
 	}
+	
+	
 }

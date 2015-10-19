@@ -48,9 +48,13 @@ public class PessoaServiceImpl extends GenericServiceImpl<Pessoa> implements Pes
 			}
 			
 			if(obj.getUsuario()!=null){
-				GenericDaoImpl genericDao = new GenericDaoImpl();
-				obj.getUsuario().setId(nextSequence(SEQUENCE_USER));
-				genericDao.cadastrar(obj.getUsuario());
+				if(!obj.getUsuario().getNome().equals("") && !obj.getUsuario().getSenha().equals("")){
+					GenericDaoImpl genericDao = new GenericDaoImpl();
+					obj.getUsuario().setId(nextSequence(SEQUENCE_USER));
+					genericDao.cadastrar(obj.getUsuario());
+				}else{
+					obj.setUsuario(null);
+				}
 			}
 			
 	        obj.setId(nextSequence(SEQUENCE));
