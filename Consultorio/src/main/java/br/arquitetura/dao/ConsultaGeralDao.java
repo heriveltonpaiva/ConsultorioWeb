@@ -24,7 +24,7 @@ public class ConsultaGeralDao extends GenericDaoImpl{
 		
 		String hql = "select p.nome as nomePaciente, cg.numeroProtocolo as numeroConsulta, cg.dataConsulta as dataConsulta, "
 					+ "	cg.valorTotal as valorTotal, cg.valorPago as valorPago, cg.parcelas as parcelamento "
-					+ " From Consulta c join c.pessoa p join c.consultaGeral cg ";
+					+ " From Procedimento c join c.pessoa p join c.consultaGeral cg ";
 		if(dataInicio!=null && dataFinal != null){
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			hql+= "WHERE cg.dataConsulta between '"+sdf.format(dataInicio)+"' and '"+sdf.format(dataFinal)+"'";	

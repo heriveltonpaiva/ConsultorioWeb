@@ -9,8 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="consulta")
-public class Consulta implements Serializable{
+@Table(name="procedimento")
+public class Procedimento implements Serializable{
 
 	private static final long serialVersionUID = 1899994452284253908L;
 	@Id

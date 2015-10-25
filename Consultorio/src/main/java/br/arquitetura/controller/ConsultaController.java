@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.arquitetura.dominio.Agendamento;
 import br.arquitetura.dominio.ArcadaDentaria;
-import br.arquitetura.dominio.Consulta;
+import br.arquitetura.dominio.Procedimento;
 import br.arquitetura.dominio.ConsultaGeral;
 import br.arquitetura.dominio.Dente;
 import br.arquitetura.dominio.DenteArcadaDentaria;
@@ -26,7 +26,7 @@ import br.arquitetura.dominio.TipoPessoa;
 import br.arquitetura.dominio.Tratamento;
 import br.arquitetura.service.ArcadaDentariaServiceImpl;
 import br.arquitetura.service.ConsultaGeralServiceImpl;
-import br.arquitetura.service.ConsultaServiceImpl;
+import br.arquitetura.service.ProcedimentoServiceImpl;
 import br.arquitetura.service.DenteArcadaDentariaServiceImpl;
 import br.arquitetura.service.DenteServiceImpl;
 import br.arquitetura.service.PessoaServiceImpl;
@@ -37,9 +37,9 @@ import br.arquitetura.utils.PaginasUtil;
 @Scope("session")
 public class ConsultaController {
 	
-	private Consulta consulta;
-	List<Consulta> listaConsultaOperacoes;
-	private ConsultaServiceImpl consultaService;
+	private Procedimento procedimento;
+	List<Procedimento> listaConsultaOperacoes;
+	private ProcedimentoServiceImpl consultaService;
 	private ConsultaGeralServiceImpl consultaGeralService;
 	private DenteArcadaDentariaServiceImpl denteArcadaDentariaService;
 	private ArcadaDentariaServiceImpl arcadaDentariaService;
@@ -54,10 +54,10 @@ public class ConsultaController {
 	private PacienteAtendimento pacienteAvulso;
 	
 	public ConsultaController() {
-	    if(consulta == null){
+	    if(procedimento == null){
 	    	resetConsulta();
 	    }
-		consultaService = new ConsultaServiceImpl();
+		consultaService = new ProcedimentoServiceImpl();
 		denteArcadaDentariaService = new  DenteArcadaDentariaServiceImpl();
 	    consultaGeralService = new ConsultaGeralServiceImpl();
 	    pessoaService = new PessoaServiceImpl();
@@ -68,7 +68,7 @@ public class ConsultaController {
 		tratamentoService = new TratamentoServiceImpl();
 		listagemDentesPaciente = new ArrayList<DenteArcadaDentaria>();
 		pacienteAvulso = new PacienteAtendimento();
-		listaConsultaOperacoes = new ArrayList<Consulta>();
+		listaConsultaOperacoes = new ArrayList<Procedimento>();
 	}
 
 	
@@ -88,7 +88,7 @@ public class ConsultaController {
 		//verifica se o paciente está cadastrado, se for paciente avulso, inicia o processo de cadastro e geração da arcada. 
 		if(!pacienteDaConsulta.isAtivo()){
 			pacienteDaConsulta = cadastrarPacientePreAtendimento();
-			consulta.setPessoa(pacienteDaConsulta);
+			procedimento.setPessoa(pacienteDaConsulta);
 		}
 		carregarListagemDentes();
 		return PaginasUtil.CONSULTA_PASSO_2;
@@ -96,7 +96,7 @@ public class ConsultaController {
 	
 	public String iniciarPasso3(){
 		
-		//se o paciente for avulso, finalizar a consulta diretamente.
+		//se o paciente for avulso, finalizar a procedimento diretamente.
 		if(pacienteDaConsulta.getId()==0){
 		
 			pacienteAvulso.setNomePaciente(pacienteDaConsulta.getNome());
@@ -108,18 +108,18 @@ public class ConsultaController {
 		double valorTotalConsulta = 0.0;
 		//Pacientes que não passaram pela realização de procedimentos
 		if(!listaConsultaOperacoes.isEmpty()){
-			for (Consulta consulta : listaConsultaOperacoes) {
-				  valorTotalConsulta += consulta.getValor();
+			for (Procedimento procedimento : listaConsultaOperacoes) {
+				  valorTotalConsulta += procedimento.getValor();
 			}
 		}
 		
-		consulta.setConsultaGeral(new ConsultaGeral());
-		consulta.getConsultaGeral().setAgendamento(agendamentoDaConsulta);
-		consulta.getConsultaGeral().setDataConsulta(new Date());
-		consulta.getConsultaGeral().setNumeroProtocolo(getNumeroConsultaGeral());
-		consulta.getConsultaGeral().setValorTotal(valorTotalConsulta);
-		consulta.getConsultaGeral().setValorPago(valorTotalConsulta);
-		consulta.setPessoa(pacienteDaConsulta);
+		procedimento.setConsultaGeral(new ConsultaGeral());
+		procedimento.getConsultaGeral().setAgendamento(agendamentoDaConsulta);
+		procedimento.getConsultaGeral().setDataConsulta(new Date());
+		procedimento.getConsultaGeral().setNumeroProtocolo(getNumeroConsultaGeral());
+		procedimento.getConsultaGeral().setValorTotal(valorTotalConsulta);
+		procedimento.getConsultaGeral().setValorPago(valorTotalConsulta);
+		procedimento.setPessoa(pacienteDaConsulta);
 		
 		return PaginasUtil.CONSULTA_PASSO_3;
 	}
@@ -132,7 +132,7 @@ public class ConsultaController {
 		}
 
 		cadastrarAvulsosAposProcedimento();
-		consultaGeralService.cadastrar(consulta.getConsultaGeral());
+		consultaGeralService.cadastrar(procedimento.getConsultaGeral());
 
 		if (!listaConsultaOperacoes.isEmpty()) {
 			registrarConsultaPacientesAposProcedimento();
@@ -143,7 +143,7 @@ public class ConsultaController {
 
 		pacienteDaConsulta = new Pessoa();
 		listagemDentesPaciente = new ArrayList<DenteArcadaDentaria>();
-		listaConsultaOperacoes = new ArrayList<Consulta>();
+		listaConsultaOperacoes = new ArrayList<Procedimento>();
 		resetConsulta();
 
 		exibirMensagemSucesso("finalizada");
@@ -152,32 +152,32 @@ public class ConsultaController {
 
 
     /**
-     * Salva a consulta do paciente que finalizou a consulta de forma direta, sem passar pela
+     * Salva a procedimento do paciente que finalizou a procedimento de forma direta, sem passar pela
      * realização de procedimentos.
      */
 	private void registrarConsultaPaciente() {
-		//Para finalização de consulta sem procedimento.
-		 consulta.setValor(consulta.getConsultaGeral().getValorTotal());
-		 consulta.setNumero(getNumeroProcedimento());
-		 consulta.setTratamento(null);
-		 consulta.setPessoa(pacienteDaConsulta);
-		 consulta.setDenteArcadaDentaria(null);
+		//Para finalização de procedimento sem procedimento.
+		 procedimento.setValor(procedimento.getConsultaGeral().getValorTotal());
+		 procedimento.setNumero(getNumeroProcedimento());
+		 procedimento.setTratamento(null);
+		 procedimento.setPessoa(pacienteDaConsulta);
+		 procedimento.setDenteArcadaDentaria(null);
 		 
-		 consultaService.cadastrar(consulta);
+		 consultaService.cadastrar(procedimento);
 		 cadastrarAtendimentoPaciente();
 	}
 
 
 	/**
-	 * salva a consulta dos paciente que estão cadastrandos na base de pacientes após
+	 * salva a procedimento dos paciente que estão cadastrandos na base de pacientes após
 	 * realização de um procedimento.
 	 */
 	private void registrarConsultaPacientesAposProcedimento() {
-		for (Consulta consulta : listaConsultaOperacoes) {
-			    consulta.setConsultaGeral(new ConsultaGeral());
-			    consulta.setConsultaGeral(this.consulta.getConsultaGeral());
-			    consulta.setPessoa(pacienteDaConsulta);
-			    consultaService.cadastrar(consulta);	
+		for (Procedimento procedimento : listaConsultaOperacoes) {
+			    procedimento.setConsultaGeral(new ConsultaGeral());
+			    procedimento.setConsultaGeral(this.procedimento.getConsultaGeral());
+			    procedimento.setPessoa(pacienteDaConsulta);
+			    consultaService.cadastrar(procedimento);	
 		}
 		
 		 cadastrarAtendimentoPaciente();
@@ -185,11 +185,11 @@ public class ConsultaController {
 
 
    /**
-    * Faz o cadastro dos pacientes avulsos após a realização do procedimento, a partir da finalização da consulta
+    * Faz o cadastro dos pacientes avulsos após a realização do procedimento, a partir da finalização da procedimento
     * esse paciente vai pertencer a tabela de pacientes.
     */
 	private void cadastrarAvulsosAposProcedimento() {
-		//Para pacientes cadastrados no momento da consulta (PACIENTES AVULSOS).
+		//Para pacientes cadastrados no momento da procedimento (PACIENTES AVULSOS).
 		Pessoa pacienteExiste = pessoaService.listarPorId("Pessoa", pacienteDaConsulta.getId());
 		if(pacienteExiste == null){
 			pacienteDaConsulta.setAtivo(true);
@@ -240,19 +240,19 @@ public class ConsultaController {
 			}
 				
 		}
-		if(consulta.getTratamento().getId()>0){
-			consulta.setTratamento(tratamentoService.listarPorId("Tratamento", consulta.getTratamento().getId()));	    
-			consulta.setNumero(getNumeroProcedimento());
-			consulta.setDenteArcadaDentaria(dente);
-			consulta.getDenteArcadaDentaria().setEmTratamento(false);
-			consulta.getDenteArcadaDentaria().setSituacao(1);
+		if(procedimento.getTratamento().getId()>0){
+			procedimento.setTratamento(tratamentoService.listarPorId("Tratamento", procedimento.getTratamento().getId()));	    
+			procedimento.setNumero(getNumeroProcedimento());
+			procedimento.setDenteArcadaDentaria(dente);
+			procedimento.getDenteArcadaDentaria().setEmTratamento(false);
+			procedimento.getDenteArcadaDentaria().setSituacao(1);
 			
-			listaConsultaOperacoes.add(consulta);
+			listaConsultaOperacoes.add(procedimento);
 			
-			consulta = new Consulta();
-			consulta.setPessoa(pacienteDaConsulta);
-			consulta.setDenteArcadaDentaria(new DenteArcadaDentaria());
-			consulta.setTratamento(new Tratamento());
+			procedimento = new Procedimento();
+			procedimento.setPessoa(pacienteDaConsulta);
+			procedimento.setDenteArcadaDentaria(new DenteArcadaDentaria());
+			procedimento.setTratamento(new Tratamento());
 			
 			exibirMensagemSucesso("Adicionado");
 		}else{
@@ -262,7 +262,7 @@ public class ConsultaController {
 	
 	
 	/**
-	 * Realiza um pré-cadastro para o paciente avulso, ele só será salvo na finalização da primeira consulta.
+	 * Realiza um pré-cadastro para o paciente avulso, ele só será salvo na finalização da primeira procedimento.
 	 * @return
 	 */
 	@Transactional
@@ -275,8 +275,8 @@ public class ConsultaController {
 	}
 	
 	public void removerConsultaOperacao(){
-		for (Consulta item : listaConsultaOperacoes) {
-			if(consulta.getNumero()==item.getNumero()){
+		for (Procedimento item : listaConsultaOperacoes) {
+			if(procedimento.getNumero()==item.getNumero()){
 				listaConsultaOperacoes.remove(item);
 				break;
 			}
@@ -295,8 +295,8 @@ public class ConsultaController {
 	 * @param event
 	 */
 	public void carregaPaciente(SelectEvent event){  
-        consulta.setPessoa((Pessoa)event.getObject());  
-        pacienteDaConsulta = consulta.getPessoa();
+        procedimento.setPessoa((Pessoa)event.getObject());  
+        pacienteDaConsulta = procedimento.getPessoa();
 	
     }
 	
@@ -327,16 +327,16 @@ public class ConsultaController {
 		this.listagemDentesPaciente = listagemDentesPaciente;
 	}
 	
-	public Consulta getConsulta() {
-		return consulta;
+	public Procedimento getConsulta() {
+		return procedimento;
 	}
-	public void setConsulta(Consulta consulta) {
-		this.consulta = consulta;
+	public void setConsulta(Procedimento procedimento) {
+		this.procedimento = procedimento;
 	}
-	public List<Consulta> getListaConsultaOperacoes() {
+	public List<Procedimento> getListaConsultaOperacoes() {
 		return listaConsultaOperacoes;
 	}
-	public void setListaConsultaOperacoes(List<Consulta> listaConsultaOperacoes) {
+	public void setListaConsultaOperacoes(List<Procedimento> listaConsultaOperacoes) {
 		this.listaConsultaOperacoes = listaConsultaOperacoes;
 	}
 	public Dente getDente() {
@@ -402,7 +402,7 @@ public class ConsultaController {
 	
 	
 	public int getNumeroProcedimento(){
-		 List<Consulta> lista = consultaService.listarTodos("Consulta");
+		 List<Procedimento> lista = consultaService.listarTodos("Procedimento");
 		 int proximaNumeracao = lista.size()+listaConsultaOperacoes.size()+1; 
 		 return proximaNumeracao;
 	}
@@ -415,7 +415,7 @@ public class ConsultaController {
 	
 	public String getTempoAtendimento(){
 		
-		Date dataInicio = consulta.getPessoa().getHorarioChegada();
+		Date dataInicio = procedimento.getPessoa().getHorarioChegada();
 		Date dataFim = new Date();
 		
 		long diff = dataFim.getTime() - dataInicio.getTime();
@@ -427,11 +427,11 @@ public class ConsultaController {
 	}
 	
 	public void resetConsulta(){
-		consulta = new Consulta();
-		consulta.setConsultaGeral(new ConsultaGeral());
-		consulta.setDenteArcadaDentaria(new DenteArcadaDentaria());
-		consulta.setPessoa(new Pessoa());
-		consulta.setTratamento(new Tratamento());	
+		procedimento = new Procedimento();
+		procedimento.setConsultaGeral(new ConsultaGeral());
+		procedimento.setDenteArcadaDentaria(new DenteArcadaDentaria());
+		procedimento.setPessoa(new Pessoa());
+		procedimento.setTratamento(new Tratamento());	
 	}
 
 }

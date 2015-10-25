@@ -10,10 +10,10 @@ import javax.faces.context.FacesContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import br.arquitetura.dominio.Consulta;
+import br.arquitetura.dominio.Procedimento;
 import br.arquitetura.dominio.DenteArcadaDentaria;
 import br.arquitetura.dominio.Pessoa;
-import br.arquitetura.service.ConsultaServiceImpl;
+import br.arquitetura.service.ProcedimentoServiceImpl;
 import br.arquitetura.service.DenteArcadaDentariaServiceImpl;
 /**
  * Controlador responsável pelas operações de histórico do Odontograma
@@ -24,8 +24,8 @@ import br.arquitetura.service.DenteArcadaDentariaServiceImpl;
 @Scope("session")
 public class OdontogramaController {
     
-	private ConsultaServiceImpl consultaService;
-	private List<Consulta> listHistoricoDentario;
+	private ProcedimentoServiceImpl consultaService;
+	private List<Procedimento> listHistoricoDentario;
 	private Pessoa paciente;
 	private DenteArcadaDentaria dentePaciente;
 	private List<DenteArcadaDentaria> listagemDentesPaciente;
@@ -35,7 +35,7 @@ public class OdontogramaController {
 	public OdontogramaController() {
 		
 	   dentePaciente = new DenteArcadaDentaria();
-	   consultaService = new ConsultaServiceImpl();
+	   consultaService = new ProcedimentoServiceImpl();
 	   paciente= new Pessoa();
 	   listagemDentesPaciente = new ArrayList<DenteArcadaDentaria>();
 	   denteArcadaDentariaService = new DenteArcadaDentariaServiceImpl();
@@ -95,10 +95,10 @@ public class OdontogramaController {
 	public void setDentePaciente(DenteArcadaDentaria dentePaciente) {
 		this.dentePaciente = dentePaciente;
 	}
-	public List<Consulta> getListHistoricoDentario() {
+	public List<Procedimento> getListHistoricoDentario() {
 		return listHistoricoDentario;
 	}
-	public void setListHistoricoDentario(List<Consulta> listHistoricoDentario) {
+	public void setListHistoricoDentario(List<Procedimento> listHistoricoDentario) {
 		this.listHistoricoDentario = listHistoricoDentario;
 	}
 	

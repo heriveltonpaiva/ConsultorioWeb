@@ -6,20 +6,20 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.arquitetura.dominio.Consulta;
+import br.arquitetura.dominio.Procedimento;
 import br.arquitetura.dominio.DenteArcadaDentaria;
 import br.arquitetura.dominio.Pessoa;
 
 @Repository
 @Transactional
-public class ConsultaDao extends GenericDaoImpl{
+public class ProcedimentoDao extends GenericDaoImpl{
 
 	private static final long serialVersionUID = 1L;
 
 	@SuppressWarnings("unchecked")
-	public List<Consulta> findHistoricoByPacienteAndDente(Pessoa paciente, DenteArcadaDentaria denteArcada){
+	public List<Procedimento> findHistoricoByPacienteAndDente(Pessoa paciente, DenteArcadaDentaria denteArcada){
 		
-		String hql = "select c from Consulta c"+
+		String hql = "select c from Procedimento c"+
 		             " join c.pessoa p"+
 				     " join c.denteArcadaDentaria d"+
 		             " join c.consultaGeral"+
@@ -37,7 +37,7 @@ public class ConsultaDao extends GenericDaoImpl{
 				q.setParameter("idDenteArcada", denteArcada.getId());
 		}
 		
-		return (List<Consulta>) q.list();
+		return (List<Procedimento>) q.list();
 	}
 	
 	
