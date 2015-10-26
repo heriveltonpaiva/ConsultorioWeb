@@ -89,7 +89,9 @@
 						    <h:outputLabel value="Cpf" rendered="#{ not empty pacienteController.paciente.cpf}"/>
 						    <h:outputText value="#{pacienteController.paciente.cpf}"/>
 						    <h:outputLabel value="Ativo" />
-						    <h:outputText value="#{pacienteController.paciente.ativo}"/>
+						    <h:outputText value="Sim" rendered="#{pacienteController.paciente.ativo}"/>
+						    <h:outputText value="Não" rendered="#{!pacienteController.paciente.ativo}"/>
+						    
 						    <h:outputLabel value="Observação" rendered="#{ not empty pacienteController.paciente.observacao}"/>
 						    <h:outputText value="#{pacienteController.paciente.observacao}"/>
 						</h:panelGrid>

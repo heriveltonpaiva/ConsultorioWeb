@@ -35,6 +35,7 @@ public class PessoaServiceImpl extends GenericServiceImpl<Pessoa> implements Pes
 				}
 			}
 			if(obj.getEndereco()!=null){
+				
 		        obj.getEndereco().setId(nextSequence(SEQUENCE_ENDERECO));
 		        dao.salvarEnderecoPessoa(obj.getEndereco());
 			}

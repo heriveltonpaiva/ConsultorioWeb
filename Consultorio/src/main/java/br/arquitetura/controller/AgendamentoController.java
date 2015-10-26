@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.arquitetura.dominio.Agendamento;
 import br.arquitetura.dominio.Expediente;
 import br.arquitetura.dominio.Pessoa;
+import br.arquitetura.dominio.TipoPessoa;
 import br.arquitetura.service.AgendamentoServiceImpl;
 import br.arquitetura.service.ExpedienteServiceImpl;
 import br.arquitetura.service.PessoaServiceImpl;
@@ -63,6 +64,11 @@ public class AgendamentoController {
 			  	agendamento.getExpediente().setId(idExpediente);
 				agendamentoService.cadastrar(agendamento);
 				exibirMensagemSucesso("Inserido");
+				agendamento = new Agendamento();
+				agendamento.setNumero(getNumeroAgendamento());
+				agendamento.setPessoa(new Pessoa());
+				agendamento.setExpediente(new Expediente());
+				
 		  	}catch(Exception e){
 		  		exibirMensagemErro(e);
 		  	}
@@ -100,7 +106,7 @@ public class AgendamentoController {
 	
 	@Transactional
 	public void carregarListagemPacientes(){
-		listagemPacientes = pessoaService.listarTodos("Pessoa");
+		listagemPacientes = pessoaService.findByTipoPessoa(TipoPessoa.PACIENTE);
 	}
 	@Transactional
 	public void carregarListagemExpedientes(){

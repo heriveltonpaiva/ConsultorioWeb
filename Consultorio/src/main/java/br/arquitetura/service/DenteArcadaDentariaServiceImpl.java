@@ -18,8 +18,7 @@ public class DenteArcadaDentariaServiceImpl extends GenericServiceImpl<DenteArca
     
 	public void cadastrar(DenteArcadaDentaria obj) {
         obj.setId(nextSequence(SEQUENCE));
-        
-        listaDentes.add(obj);
+        //listaDentes.add(obj);
         super.cadastrar(obj);
 	}
 	
