@@ -26,9 +26,18 @@
 	<!-- Configuração DataSource -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="org.postgresql.Driver"></property>
+		
+		<!-- Configuração Local 
 		<property name="url" value="jdbc:postgresql://localhost:5432/Consultorio"></property>
 		<property name="username" value="postgres"></property>
 		<property name="password" value="280394"></property>
+		-->
+		
+		<!-- Configuração de Produção -->
+		<property name="url" value="jdbc:postgres://xtfsdvlkmgmkca:56BkHicD3jEPK6cMFPsYjX8Tjk@ec2-54-83-52-144.compute-1.amazonaws.com:5432/dcmmhophs9mlb2"></property>
+		<property name="username" value="xtfsdvlkmgmkca"></property>
+		<property name="password" value="56BkHicD3jEPK6cMFPsYjX8Tjk"></property>
+		
 	</bean>
 	
 	<!-- Hibernate Configuração Session Factory -->
