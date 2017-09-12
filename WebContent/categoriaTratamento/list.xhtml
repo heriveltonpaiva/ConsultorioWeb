@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+      
+     <ui:composition template="/template.xhtml">
+        <ui:define name="corpo">
+        <h:form id="formtable">
+        <h2>Categorias Tratamento</h2>
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        
+         <h:panelGrid columns="2" style="margin-bottom:20px;" >
+            <b:commandButton  value="Cadastrar" iconAwesome="plus-square" action="#{categoriaTratamentoController.iniciarCadastro}" style="margin-right:2px; width:150px;"/>
+            <b:button value="Listar" iconAwesome="list" disabled="true" style="width:150px;"/>
+               
+        </h:panelGrid>      
+                
+                  <p:dataTable id="tabela" var="item" value="#{categoriaTratamentoController.listagem}" style="margin-bottom:20px;">               
+                      <p:column headerText="Descrição">
+                          <h:outputText value="#{item.descricao}"/>
+                      </p:column>             
+                      <p:column style="width:50px;">
+                          <p:commandButton  action="#{categoriaTratamentoController.editar}" icon="ui-icon-pencil" >
+                                <f:setPropertyActionListener target="#{categoriaTratamentoController.categoriaTratamento}" value="#{item}"  />             
+                          </p:commandButton>
+                          <p:commandButton  action="#{categoriaTratamentoController.remover}" icon="ui-icon-close" update="tabela"  >
+                                                          <f:setPropertyActionListener target="#{categoriaTratamentoController.categoriaTratamento}" value="#{item}"  />             
+                          </p:commandButton>
+                        </p:column>
+                         <f:facet name="footer">
+        					 <h:outputText value="#{fn:length(categoriaTratamentoController.listagem)} Registros Encontrados"/>
+    				    </f:facet>
+                  </p:dataTable>
+        
+        </h:form>
+      </ui:define>
+    </ui:composition>
+</html>

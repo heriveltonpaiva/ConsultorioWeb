@@ -1,0 +1,19 @@
+-- Criação das Sequences do Sistema
+CREATE SEQUENCE agendamento_id_seq;
+CREATE SEQUENCE arcada_dentaria_id_seq;
+CREATE SEQUENCE arquivo_id_seq;
+CREATE SEQUENCE categoria_tratamento_id_seq;
+CREATE SEQUENCE consulta_geral_id_seq;
+CREATE SEQUENCE consulta_geral_num_protocolo_seq;
+CREATE SEQUENCE contato_id_seq;
+CREATE SEQUENCE dente_arcada_dentaria_id_seq;
+CREATE SEQUENCE dente_id_seq;
+CREATE SEQUENCE endereco_id_seq;
+CREATE SEQUENCE expediente_id_seq;
+CREATE SEQUENCE medicacao_id_seq;
+CREATE SEQUENCE paciente_atendimento_id_seq;
+CREATE SEQUENCE pessoa_id_seq;
+CREATE SEQUENCE procedimento_id_seq;
+CREATE SEQUENCE saida_financeiro_id_seq;
+CREATE SEQUENCE tratamento_id_seq;
+CREATE SEQUENCE users_id_seq;

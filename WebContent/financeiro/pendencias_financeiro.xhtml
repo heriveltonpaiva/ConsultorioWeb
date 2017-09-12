@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+      
+     <ui:composition template="/template.xhtml">
+        <ui:define name="corpo">
+            <h:form id="form">
+             <h2>Pacientes com Pendências Financeiras</h2>
+             
+              <h:panelGrid columns="3">
+               		<p:outputLabel  value="Data Inicio" /> 
+               		<p:outputLabel  value="Data Fim" /> 
+        		    <p:outputLabel  value="" /> 
+        		    
+        			<p:calendar id="dataInicio" value="#{financeiroController.dataInicio}"  style="margin-right:10px;" mask="99/99/9999"/>
+        			<p:calendar id="dataFinal" value="#{financeiroController.dataFinal}"  style="margin-right:10px;" mask="99/99/9999"/>
+               <b:commandButton action="#{financeiroController.carregarListaEntrada}" value="Buscar" style="width:150px;" />
+			   </h:panelGrid>
+             
+             <p:dataTable id="tabela" var="entrada" value="#{financeiroController.listaEntradaFinanceiro}" style="margin-bottom:20px;margin-top:20px;" emptyMessage="Nenhum registro encontrado.">
+                      
+                      <p:column headerText="N° da Consulta" width="180">
+                          <h:outputText value="#{entrada.numeroConsulta}"/>
+                      </p:column> 
+                    	<p:column headerText="Paciente">
+                          <h:outputText value="#{entrada.nomePaciente}"/>
+                      </p:column> 
+                      <p:column headerText="Data da Consulta" width="100">
+                          <h:outputText value="#{entrada.dataConsulta}">
+                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/> 
+                          </h:outputText>
+                      </p:column> 
+                     
+                      <p:column headerText="Saldo Devedor " width="120">
+                          <h:outputText value="#{entrada.saldoDevedor}">
+                            <f:convertNumber type="currency" currencySymbol="R$" />
+                          </h:outputText>
+                      </p:column> 
+                      
+                      <p:columnGroup type="footer">
+				            <p:row>
+				                <p:column colspan="3" style="text-align:right;" footerText="Total:"/>
+				                <p:column footerText="#{financeiroController.totalPendencia}" />
+				            </p:row>
+				        </p:columnGroup>
+                      
+                       <f:facet name="footer">
+        					 <h:outputText value="#{fn:length(financeiroController.listaEntradaFinanceiro)} Registros Encontrados"/>
+    				  </f:facet>
+                 </p:dataTable>
+             
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="corpo">	
+
+	<h1>Oops!</h1>
+	<h2>Erro :(</h2>
+	<br />
+	<h:outputText value="Error Code: #{errorHandler.statusCode}" />
+	<br />
+	<h:outputText value="Error Desscription: #{errorHandler.message}" />
+	<br />
+	<h:outputText value="Exception Type: #{errorHandler.exceptionType}" />
+	<br />
+	<h:outputText value="Exception Class: #{errorHandler.exception}" />
+	<br />
+	<h:outputText value="Request URI : #{errorHandler.requestURI}" />
+	
+	<br />
+	<br />
+	<f:view>
+		 <h:form>
+		 	<b:commandButton value="Voltar a Página Inicial" action="/index.xhtml" />
+		 </h:form>
+	</f:view>
+	<br />
+	<br />
+	<br />
+	</ui:define>
+</ui:composition>
+
+</html>

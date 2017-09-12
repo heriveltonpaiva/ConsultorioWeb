@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+     <ui:composition template="/template.xhtml">
+        <ui:define name="corpo">
+        <h:form id="formtable">
+        <h2>Expedientes</h2>
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        <h:panelGrid columns="2" style="margin-bottom:20px;" >
+            <b:commandButton  value="Cadastrar" iconAwesome="plus-square" action="#{expedienteController.iniciarCadastro}" style="margin-right:2px; width:150px;"/>
+            <b:button value="Listar" iconAwesome="list" disabled="true"  style="width:150px;"/>
+               
+        </h:panelGrid>  
+        
+                  <p:dataTable id="tabela" var="item" value="#{expedienteController.listagem}" style="margin-bottom:20px;">
+                      
+                      <p:column headerText="Dia">
+                          <h:outputText value="#{item.diaExpediente}"/>
+                      </p:column> 
+                      <p:column headerText="Inicio" width="80">
+                          <h:outputText value="#{item.horaInicio}" >
+                              <f:convertDateTime pattern="HH:mm" timeZone="GMT-03:00"/>  
+                          </h:outputText>
+                      </p:column> 
+                      <p:column headerText="Término" width="80">
+                          <h:outputText value="#{item.horaFinal}">
+                               <f:convertDateTime pattern="HH:mm" timeZone="GMT-03:00"/>  
+                          </h:outputText>
+                      </p:column> 
+                        
+                                           
+                      <p:column style="width:50px;">
+                          <p:commandButton action="#{expedienteController.editar}" icon="ui-icon-pencil" >
+                                <f:setPropertyActionListener target="#{expedienteController.expediente}" value="#{item}" />             
+                          </p:commandButton>
+
+                          <p:commandButton action="#{expedienteController.remover}" icon="ui-icon-close" update="tabela" >
+                                <f:setPropertyActionListener target="#{expedienteController.expediente}" value="#{item}"  />             
+                          </p:commandButton>
+
+                       </p:column>
+                       <f:facet name="footer">
+        					 <h:outputText value="#{fn:length(expedienteController.listagem)} Registros Encontrados"/>
+    				    </f:facet>
+                  </p:dataTable>
+  		
+        </h:form>
+      </ui:define>
+    </ui:composition>
+</html>
