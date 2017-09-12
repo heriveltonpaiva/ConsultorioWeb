@@ -1,0 +1,141 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+      
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="corpo">
+        <h:form id="formtable">
+        <h2>Pacientes</h2>
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        <h:panelGrid columns="2" style="margin-bottom:20px;" >
+            <b:commandButton  value="Cadastrar" iconAwesome="user-plus" action="#{pacienteController.iniciarCadastro}" style="margin-right:2px; width:150px;"/>
+            <b:button value="Listar" iconAwesome="list" disabled="true" style="width:150px;"/>
+               
+        </h:panelGrid>    
+                  <p:dataTable id="tabela" var="item" value="#{pacienteController.listagem}" style="margin-bottom:20px;">
+                      
+                      <p:column headerText="Nome" >
+                          <h:outputText value="#{item.nome}"/>
+                      </p:column> 
+                      <p:column headerText="Nascimento" >
+                          <h:outputText value="#{item.dataNascimento}">
+                          	<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                          </h:outputText>
+                      </p:column>
+                      
+                      <p:column headerText="Endereço">
+                      
+                          <h:outputText value="#{item.endereco.rua}"/>
+                      </p:column> 
+                      
+                      <p:column headerText="Contato" >
+                          <h:outputText value="#{item.contatoFormatado}"/><br/>
+                      </p:column>
+                      
+                     
+                      
+                      <p:column  headerText="Ações" width="175">
+                      	 <p:commandButton  icon="ui-icon-search" oncomplete="PF('dlg2').show();" update=":formtable:dlgInfoPaciente" title="Visualizar Informações">
+                             <f:setPropertyActionListener target="#{pacienteController.idFoto}" value="#{item.arquivo.id}"  />
+                             <f:setPropertyActionListener target="#{pacienteController.paciente}" value="#{item}"  />   
+                       	 </p:commandButton>
+                         
+                         <p:commandButton title=" Visualizar Medicações" icon="ui-icon-clipboard" oncomplete="PF('dlg3').show();" update=":formtable:dlgMedicacao" disabled="#{empty item.medicacoes}" >
+                                <f:setPropertyActionListener target="#{pacienteController.paciente}" value="#{item}"  /> 
+                            </p:commandButton>
+                         
+                          <p:commandButton  title="Editar Informações" action="#{pacienteController.editar}" icon="ui-icon-pencil" >
+                                <f:setPropertyActionListener target="#{pacienteController.paciente}" value="#{item}"  />             
+                          </p:commandButton>
+
+                          <p:commandButton title="Excluir Paciente" action="#{pacienteController.remover}" icon="ui-icon-close" update="tabela">
+                                   <f:setPropertyActionListener target="#{pacienteController.paciente}" value="#{item}"  />             
+                          </p:commandButton>
+                        </p:column>
+                        
+                        <f:facet name="footer">
+        						<h:outputText value="#{fn:length(pacienteController.listagem)} Registros Encontrados"/>
+    		 			</f:facet>
+                  </p:dataTable>
+                 
+         
+          <p:dialog  id="dlgInfoPaciente" header="Informações do Paciente" widgetVar="dlg2" height="500" width="500" resizable="true" closable="true">
+          
+          
+          				<h:panelGrid columns="1">
+						    <h:outputLabel value="Nome do paciente" />
+						    <h:outputText value="#{pacienteController.paciente.nome}"/>
+						    <h:outputLabel value="Nome da mãe" rendered="#{ not empty pacienteController.paciente.nomeMae}"/>
+						    <h:outputText value="#{pacienteController.paciente.nomeMae}" />
+						    <h:outputLabel value="Nome do Pai" rendered="#{ not empty pacienteController.paciente.nomePai}"/>
+						    <h:outputText value="#{pacienteController.paciente.nomePai}"/>
+						    <h:outputLabel value="Nacionalidade" rendered="#{ not empty pacienteController.paciente.nacionalidade}"/>
+						    <h:outputText value="#{pacienteController.paciente.nacionalidade}"/>
+						    <h:outputLabel value="Naturalidade" rendered="#{ not empty pacienteController.paciente.naturalidade}"/>
+						    <h:outputText value="#{pacienteController.paciente.naturalidade}"/>
+						    <h:outputLabel value="Sexo" rendered="#{ not empty pacienteController.paciente.sexo}"/>
+						    <h:outputText value="#{pacienteController.paciente.sexo}"/>
+						    <h:outputLabel value="Data de Nascimento" rendered="#{ not empty pacienteController.paciente.dataNascimento}"/>
+						    <h:outputText value="#{pacienteController.paciente.dataNascimento}">
+						       <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+						    </h:outputText>
+						    <h:outputLabel value="RG" rendered="#{ not empty pacienteController.paciente.rg}"/>
+						    <h:outputText value="#{pacienteController.paciente.rg}"/>
+						    <h:outputLabel value="Cpf" rendered="#{ not empty pacienteController.paciente.cpf}"/>
+						    <h:outputText value="#{pacienteController.paciente.cpf}"/>
+						    <h:outputLabel value="Ativo" />
+						    <h:outputText value="Sim" rendered="#{pacienteController.paciente.ativo}"/>
+						    <h:outputText value="Não" rendered="#{!pacienteController.paciente.ativo}"/>
+						    
+						    <h:outputLabel value="Observação" rendered="#{ not empty pacienteController.paciente.observacao}"/>
+						    <h:outputText value="#{pacienteController.paciente.observacao}"/>
+						</h:panelGrid>
+						
+						
+						<h:panelGrid columns="1">
+						    <h:outputLabel value="Endereço" rendered="#{ not empty pacienteController.paciente.endereco.rua}"/>
+						    <h:outputText value="#{pacienteController.paciente.endereco.rua}, #{pacienteController.paciente.endereco.numero}" rendered="#{ not empty pacienteController.paciente.endereco.rua}"/>
+						 
+						    <h:outputLabel value="Cidade - UF" rendered="#{ not empty pacienteController.paciente.endereco.cidade}"/>
+						    <h:outputText value="#{pacienteController.paciente.endereco.cidade} - #{pacienteController.paciente.endereco.estado}" rendered="#{ not empty pacienteController.paciente.endereco.cidade}"/>
+						</h:panelGrid>    
+						
+			<h:panelGrid columns="1" rendered="#{not empty pacienteController.paciente.contato}">
+						<h:outputLabel value="Telefone" rendered="#{pacienteController.paciente.contato.telefone > 0}"/>
+						<h:outputText value="#{pacienteController.paciente.contato.telefone}" rendered="#{pacienteController.paciente.contato.telefone > 0}"/>
+						<h:outputLabel value="Celular" rendered="#{pacienteController.paciente.contato.celular > 0}"/>
+						<h:outputText value="#{pacienteController.paciente.contato.celular}" rendered="#{pacienteController.paciente.contato.celular > 0}"/>
+						<h:outputLabel value="E-mail" rendered="#{not empty pacienteController.paciente.contato.email}"/>
+						<h:outputText value="#{pacienteController.paciente.contato.email}" rendered="#{not empty pacienteController.paciente.contato.email}"/>	
+			</h:panelGrid>
+			
+			<h:panelGrid columns="1">
+				<h:outputLabel value="Foto" />
+				<h:graphicImage value="/images/#{pacienteController.paciente.id}" cache="false" width="200" height="250" />
+            </h:panelGrid>
+          </p:dialog>
+          
+           <p:dialog  id="dlgMedicacao" header="Medicações do Paciente" widgetVar="dlg3" height="500" width="500" resizable="true" closable="true">
+						
+						<p:dataTable id="tabelaMedicacao" var="item" value="#{pacienteController.paciente.medicacoes}"
+							style="margin-bottom:20px;" rendered="#{not empty pacienteController.paciente.medicacoes}" >
+
+							<p:column headerText="Descrição">
+								<h:outputText value="#{item.descricao}" />
+							</p:column>
+							<p:column headerText="Observação">
+								<h:outputText value="#{item.observacao}" />
+							</p:column>
+						</p:dataTable>
+						
+          </p:dialog>
+          
+          </h:form>
+      </ui:define>
+    </ui:composition>
+</html>

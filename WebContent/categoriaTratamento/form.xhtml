@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+     <ui:composition template="/template.xhtml">
+        <ui:define name="corpo">
+            <h:form id="form">
+                <h2>Cadastro de Categoria Tratamento</h2>
+
+                  <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />     
+
+    			<h:panelGrid columns="2" style="margin-bottom:20px;">
+                    <b:button value="Cadastrar" iconAwesome="plus-square" disabled="true" style="margin-right:2px; width:150px;"/>
+                    <b:commandButton value="Listar" iconAwesome="list" action="#{categoriaTratamentoController.carregarListagem}" style="width:150px;" />
+                </h:panelGrid>   
+                
+                        <p:outputLabel value="Descricão"/>
+                        <b:inputText value="#{categoriaTratamentoController.categoriaTratamento.descricao}" /> 
+                   
+                  <b:commandButton action="#{categoriaTratamentoController.salvar}" value="Cadastrar Categoria" style="margin-bottom:20px;width:200px;" look="primary"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

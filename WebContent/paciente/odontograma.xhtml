@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="corpo">
+        <h:form id="formtable">
+        <h2>Odontograma</h2>
+      
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+      
+      			<h:outputLabel value="Nome do Paciente:" />
+         
+                 <p:autoComplete id="autoCompletePaciente"  value="#{odontogramaController.paciente}" completeMethod="#{pacienteController.completePaciente}" 
+                  var="pessoa" itemLabel="#{pessoa.nome}" itemValue="#{pessoa}" converter="pacienteConverter" > 
+                  <p:ajax event="itemSelect" listener="#{odontogramaController.exibirHistorico}" update="formtable" />  
+                  </p:autoComplete>
+                <br/><br/>
+      		
+      		<ui:include src="include_odontograma.xhtml" /> 
+         
+      
+            <br/><br/>
+         	<p:dataTable id="tabela" var="item" value="#{odontogramaController.listHistoricoDentario}" style="margin-top:20px; margin-bottom:20px;" rendered="#{not empty odontogramaController.listHistoricoDentario}">  
+                   <f:facet name="header">
+						Histórico do Paciente
+					</f:facet>             
+                      <p:column headerText="N°">
+                          <h:outputText value="#{item.numero}"/>
+                      </p:column>   
+                      <p:column headerText="Data">
+                          <h:outputText value="#{item.consultaGeral.dataConsulta}">
+                          	<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                          </h:outputText>
+                      </p:column>  
+                      <p:column headerText="Procedimentos">
+                          <h:outputText value="#{item.tratamento.descricao}"/>
+                      </p:column>  
+                      <p:column headerText="Observação ">
+                          <h:outputText value="#{item.observacao}"/>
+                      </p:column>  
+                      <p:column headerText="Dente">
+                          <h:outputText value="#{item.denteArcadaDentaria}"/>
+                      </p:column>           
+                     
+                  </p:dataTable>
+      
+        </h:form>
+      
+      </ui:define>
+    </ui:composition>
+</html>
